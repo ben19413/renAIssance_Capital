@@ -7,7 +7,8 @@
 
         # make features
         # call train classifier (input: data) (output: buy, sell, no trade)
-        # call train ATR (input: data) (output: stop loss)
+        # if not no trade;
+        #       call train ATR (input: data) (output: stop loss)
 
         # Return timestamp, prediction, stop loss, take profit via making new local csv
 

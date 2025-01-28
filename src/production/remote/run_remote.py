@@ -3,8 +3,10 @@
 
 # make features
 # call train classifier (input: data) (output: buy, sell, no trade)
-# call train ATR (input: data) (output: stop loss)
-
+# if not no trade:
+#       call train ATR (input: data) (output: take profit, stop loss)
+# else:
+#       give stop loss and take profit arbitary values
 # Return prediction, stop loss, take profit 
 
 
