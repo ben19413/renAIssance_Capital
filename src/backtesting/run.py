@@ -6,7 +6,7 @@ from src.production.models import ATR, classifier
 
 # for loop through dates and times
 
-    # data = data < (date and time)
+    # data = (date and time) < data < (date and time)
 
     # call make features
 
