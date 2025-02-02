@@ -1,13 +1,13 @@
 
-version: '3.8'
+
 
 services:
   trader:
     build: .
     container_name: trader
     volumes:
-      - ./data:/app/data
-      - ./config:/app/config
+      - ./backtesting:/app/src/backtesting
+      - ./production:/app/src/production
     
     restart: unless-stopped
 

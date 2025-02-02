@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Clone public repository FIRST
-RUN git clone https://github.com/ben19413/renAIssance_Capital.git /app
+COPY src /app/src
 
 # Copy only additional necessary files
 COPY requirements.txt /app/
