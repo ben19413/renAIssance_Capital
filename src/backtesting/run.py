@@ -1,12 +1,13 @@
 from src.production import make_features
 from src.production.models import ATR, classifier
+import pandas as pd
 
 # get full backtesting data via get_backtesting_data
-# initiate results_df
+results_df = pd.DataFrame()
 
 # for loop through dates and times
 
-    # data = data < (date and time)
+    # data = (date and time) < data < (date and time)
 
     # call make features
 
@@ -14,13 +15,13 @@ from src.production.models import ATR, classifier
 
     # append classifier outcome to results_df
 
-    # if trade:
+    # if not no trade:
 
         # call train ATR (input: data) (output: stop loss)
 
         # append ATR outcome to results_df
 
 
-# call get analysis (input: results_df) (output: )
+# call get analysis (input: results_df) (output: plots, summarisation etc)
 
 
