@@ -1,9 +1,13 @@
 from src.production import make_features
 from src.production.models import ATR, classifier
+from src.backtesting.get_backtesting_data import get_backtesting_data
 import pandas as pd
+
 
 # get full backtesting data via get_backtesting_data
 results_df = pd.DataFrame()
+
+full_backtesting_data = get_backtesting_data()
 
 # for loop through dates and times
 
