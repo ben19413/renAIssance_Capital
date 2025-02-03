@@ -1,0 +1,14 @@
+
+
+
+services:
+  trader:
+    build: .
+    container_name: trader
+    volumes:
+      - ./backtesting:/app/src/backtesting
+      - ./production:/app/src/production
+    
+    restart: unless-stopped
+
+
