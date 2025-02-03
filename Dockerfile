@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Clone public repository FIRST
-COPY src /app/src
+COPY . /app/src
 
 # Copy only additional necessary files
 COPY requirements.txt /app/
