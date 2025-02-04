@@ -5,7 +5,8 @@ services:
   trader:
     build: .
     container_name: trader
-    
+    volumes:
+      - ./src:/app/src
     
     restart: unless-stopped
 
