@@ -3,5 +3,5 @@ pandas==2.2.3
 scikit-learn==1.6.1
 numpy==2.2.2
 ta==0.11.0
-optuna==4.2.0
+setuptools==75.8.0
 
