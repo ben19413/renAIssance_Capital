@@ -5,9 +5,7 @@ services:
   trader:
     build: .
     container_name: trader
-    volumes:
-      - ./src/backtesting:/app/src/backtesting
-      - ./src/production:/app/src/production
+    
     
     restart: unless-stopped
 
