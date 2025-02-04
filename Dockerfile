@@ -10,13 +10,17 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Clone public repository FIRST
-COPY . /app/src
+COPY setup.py .
+COPY src  /app/src
+
+ENV PYTHONPATH=/app/src
 
 # Copy only additional necessary files
 COPY requirements.txt /app/
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN pip install .
 
 # Command to run your script
 CMD ["tail", "-f", "/dev/null"]
