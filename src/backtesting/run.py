@@ -42,7 +42,7 @@ for training_end_point in range(first_training_end_index, final_training_end_ind
 
     # if not no trade:
 
-        # call train ATR (input: data) (output: stop loss)
+        # call ATR model (input: data) (output: take profit, stop loss)
 
         # append ATR outcome to results_df
 
