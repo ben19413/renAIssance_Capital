@@ -11,6 +11,9 @@ backtest_start_date_time = "2024.05.26 18:00"
 # format YYYY-MM-DD HH:MM
 backtest_end_date_time = "2024.05.26 20:00"
 
+backtest_start_date_time = pd.to_datetime(backtest_start_date_time)
+backtest_end_date_time = pd.to_datetime(backtest_end_date_time)
+
 # TODO: adapt this to initiate correct columns
 results_df = pd.DataFrame()
 
@@ -26,11 +29,6 @@ for training_end_point in range(first_training_end_index, final_training_end_ind
     training_df = full_backtesting_data.iloc[training_start_point:training_end_point + 1]
 
     print(training_df)
-
-
-    
-
-
 
 # for loop through dates and times
 
