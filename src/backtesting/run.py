@@ -30,6 +30,9 @@ for training_end_point in range(first_training_end_index, final_training_end_ind
 
     print(training_df)
 
+    features_df = make_features(training_df)
+
+    print(features_df)
     
 
 # for loop through dates and times
