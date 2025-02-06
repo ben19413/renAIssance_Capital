@@ -30,6 +30,8 @@ for training_end_point in range(first_training_end_index, final_training_end_ind
 
     print(training_df)
 
+    
+
 # for loop through dates and times
 
     # data = (date and time) < data < (date and time)

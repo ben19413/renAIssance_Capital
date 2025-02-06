@@ -10,7 +10,3 @@ def get_backtesting_data():
     full_backtesting_data['Time'] = pd.to_datetime(full_backtesting_data['Time'])
 
     return full_backtesting_data
-
-
-
-
