@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
+EXPOSE 8888
+
 # Clone public repository FIRST
 COPY setup.py .
 COPY src  /app/src

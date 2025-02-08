@@ -1,0 +1,31 @@
+[I 2025-02-08 14:32:03.113 ServerApp] jupyter_lsp | extension was successfully linked.
+[I 2025-02-08 14:32:03.121 ServerApp] jupyter_server_terminals | extension was successfully linked.
+[W 2025-02-08 14:32:03.123 LabApp] 'token' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-08 14:32:03.123 LabApp] 'password' has moved from NotebookApp to ServerApp. This config will be passed to ServerApp. Be sure to update your config before our next release.
+[W 2025-02-08 14:32:03.127 ServerApp] ServerApp.token config is deprecated in 2.0. Use IdentityProvider.token.
+[I 2025-02-08 14:32:03.127 ServerApp] jupyterlab | extension was successfully linked.
+[I 2025-02-08 14:32:03.131 ServerApp] notebook | extension was successfully linked.
+[I 2025-02-08 14:32:03.133 ServerApp] Writing Jupyter server cookie secret to /root/.local/share/jupyter/runtime/jupyter_cookie_secret
+[I 2025-02-08 14:32:04.042 ServerApp] notebook_shim | extension was successfully linked.
+[W 2025-02-08 14:32:04.106 ServerApp] All authentication is disabled.  Anyone who can connect to this server will be able to run code.
+[I 2025-02-08 14:32:04.109 ServerApp] notebook_shim | extension was successfully loaded.
+[I 2025-02-08 14:32:04.113 ServerApp] jupyter_lsp | extension was successfully loaded.
+[I 2025-02-08 14:32:04.115 ServerApp] jupyter_server_terminals | extension was successfully loaded.
+[I 2025-02-08 14:32:04.128 LabApp] JupyterLab extension loaded from /usr/local/lib/python3.11/site-packages/jupyterlab
+[I 2025-02-08 14:32:04.128 LabApp] JupyterLab application directory is /usr/local/share/jupyter/lab
+[I 2025-02-08 14:32:04.132 LabApp] Extension Manager is 'pypi'.
+[I 2025-02-08 14:32:04.339 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2025-02-08 14:32:04.344 ServerApp] notebook | extension was successfully loaded.
+[I 2025-02-08 14:32:04.344 ServerApp] Serving notebooks from local directory: /app/src
+[I 2025-02-08 14:32:04.344 ServerApp] Jupyter Server 2.15.0 is running at:
+[I 2025-02-08 14:32:04.344 ServerApp] http://fac1ad486217:8888/tree
+[I 2025-02-08 14:32:04.345 ServerApp]     http://127.0.0.1:8888/tree
+[I 2025-02-08 14:32:04.345 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[I 2025-02-08 14:32:04.363 ServerApp] Skipped non-installed server(s): bash-language-server, dockerfile-language-server-nodejs, javascript-typescript-langserver, jedi-language-server, julia-language-server, pyright, python-language-server, python-lsp-server, r-languageserver, sql-language-server, texlab, typescript-language-server, unified-language-server, vscode-css-languageserver-bin, vscode-html-languageserver-bin, vscode-json-languageserver-bin, yaml-language-server
+[I 2025-02-08 14:32:12.019 ServerApp] 302 GET / (@192.168.160.1) 4.01ms
+[W 2025-02-08 14:32:25.335 ServerApp] 404 GET /hub/api (306ed57c6c384c4c8f060f9ad3059091@192.168.160.1) 25.19ms referer=None
+[I 2025-02-08 14:32:25.338 ServerApp] 302 GET / (@192.168.160.1) 0.50ms
+[W 2025-02-08 14:32:25.359 ServerApp] 404 GET /login? (b019d8158e3d4e45a1aaafe21611cd25@192.168.160.1) 1.20ms referer=None
+[I 2025-02-08 14:32:40.772 ServerApp] Kernel started: f723ccce-099b-40b8-8963-b34f986d8271
+[I 2025-02-08 14:32:42.016 ServerApp] Connecting to kernel f723ccce-099b-40b8-8963-b34f986d8271.
+[I 2025-02-08 14:32:45.581 ServerApp] Connecting to kernel f723ccce-099b-40b8-8963-b34f986d8271.
