@@ -1,7 +1,10 @@
+from backtesting.get_backtesting_data import get_backtesting_data
+from backtesting.analysis import analysis
+
 from production.make_features import make_features
 from production.models.ATR import ATR
 from production.models.classifier import classifier
-from backtesting.get_backtesting_data import get_backtesting_data
+
 import pandas as pd
 from datetime import timedelta
 import numpy as np
@@ -47,4 +50,5 @@ for training_end_point in training_end_point_df.index:
     
 results_df.index = training_end_point_df.index
 
+analysis(full_backtesting_df, results_df)
 # call get analysis (input: results_df) (output: plots, summarisation etc)
