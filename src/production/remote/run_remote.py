@@ -7,6 +7,4 @@
 #       call train ATR (input: data) (output: take profit, stop loss)
 # else:
 #       give stop loss and take profit arbitary values
-# Return prediction, stop loss, take profit 
-
-
+# Return prediction, stop loss, take profit
