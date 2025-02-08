@@ -7,6 +7,5 @@ import pandas as pd
 def get_backtesting_data():
 
     full_backtesting_data = pd.read_csv('../files/dummy_BTC_dev_data.csv')
-    full_backtesting_data['Time'] = pd.to_datetime(full_backtesting_data['Time'])
-
+    full_backtesting_data.index = pd.to_datetime(full_backtesting_data['Time'])
     return full_backtesting_data

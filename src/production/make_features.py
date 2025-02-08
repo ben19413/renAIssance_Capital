@@ -38,10 +38,11 @@ def create_target(df, Close_col, num_candles):
         elif Close_prices[i] == min(local_window) and local_window.tolist().count(Close_prices[i]) == 1:
             target[i] = 2
 
-    df['TARGET'] = target
+    df['Target'] = target
     return df
 
 def make_features(df):
+        df['Time'] = pd.to_datetime(df['Time'])
         df['hour'] = df['Time'].dt.hour
         df['day_of_week'] = df['Time'].dt.dayofweek  # Monday=0, Sunday=6
         df.drop(columns=['Time'], inplace=True)
@@ -56,11 +57,9 @@ def make_features(df):
         # EMA
         df['ema5'] = df['Close'].ewm(span=5, adjust=False).mean()
         df['ema10'] = df['Close'].ewm(span=10, adjust=False).mean()
-        df['ema10'] = df['Close'].ewm(span=50, adjust=False).mean()
         df['ema20'] = df['Close'].ewm(span=20, adjust=False).mean()
-        df['ema10'] = df['Close'].ewm(span=50, adjust=False).mean()
-        df['ema10'] = df['Close'].ewm(span=30, adjust=False).mean()
-        df['ema10'] = df['Close'].ewm(span=40, adjust=False).mean()
+        df['ema30'] = df['Close'].ewm(span=30, adjust=False).mean()
+        df['ema40'] = df['Close'].ewm(span=40, adjust=False).mean()
         df['ema50'] = df['Close'].ewm(span=50, adjust=False).mean()
         # RSI
         df['rsi_3'] = ta.momentum.RSIIndicator(df['Close'], window=3).rsi()
@@ -77,7 +76,7 @@ def make_features(df):
         df['bollinger_lband'] = bollinger.bollinger_lband()
 
         # Average True Range (ATR)
-        df['atr'] = ta.volatility.AverageTrueRange(df['High'], df['Low'], df['Close'], window=14).average_true_range()
+        df['ATR'] = ta.volatility.AverageTrueRange(df['High'], df['Low'], df['Close'], window=14).average_true_range()
 
         # Stochastic Oscillator
         stochastic = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close'], window=14, smooth_window=3)
@@ -92,5 +91,7 @@ def make_features(df):
 
         # On-Balance Volume (OBV)
         df['obv'] = ta.volume.OnBalanceVolumeIndicator(df['Close'], df['Volume']).on_balance_volume()
+
+        df = df.dropna() 
 
         return df
