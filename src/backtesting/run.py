@@ -5,32 +5,25 @@ from backtesting.get_backtesting_data import get_backtesting_data
 import pandas as pd
 from datetime import timedelta
 import numpy as np
+import os 
 
-# TODO: replace with variables straight from .env
-training_period_data_size = 1000
-# format YYYY-MM-DD HH:MM
-backtest_start_date_time = "2024.05.26 20:00"
-# format YYYY-MM-DD HH:MM
-backtest_end_date_time = "2024.05.26 21:00"
+backtest_start_date_time = pd.to_datetime(os.getenv('backtest_start_date_time'))
+backtest_end_date_time = pd.to_datetime(os.getenv('backtest_end_date_time'))
 
-backtest_start_date_time = pd.to_datetime(backtest_start_date_time)
-backtest_end_date_time = pd.to_datetime(backtest_end_date_time)
-
-# TODO: adapt this to initiate correct columns
 results_df = pd.DataFrame(columns=["trade", "stop_loss", "take_profit"])
 
-full_backtesting_data = get_backtesting_data().iloc[::-1]
+full_backtesting_df = get_backtesting_data().iloc[::-1]
 
-filtered_backtesting_data = full_backtesting_data.loc[
+training_end_point_df = full_backtesting_df.loc[
     backtest_start_date_time:backtest_end_date_time
 ]
-for training_end_point in filtered_backtesting_data.index:
+for training_end_point in training_end_point_df.index:
 
     training_start_point = training_end_point - timedelta(
-        hours=training_period_data_size
+        hours=int(os.getenv('training_period_data_size'))
     )
 
-    training_df = full_backtesting_data.loc[training_start_point:training_end_point]
+    training_df = full_backtesting_df.loc[training_start_point:training_end_point]
 
     features_df = make_features(training_df)
 
@@ -51,7 +44,7 @@ for training_end_point in filtered_backtesting_data.index:
     )
 
     results_df = pd.concat([results_df, iteration_df], ignore_index=True)
-
-results_df.index = filtered_backtesting_data.index
+    
+results_df.index = training_end_point_df.index
 
 # call get analysis (input: results_df) (output: plots, summarisation etc)

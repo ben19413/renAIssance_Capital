@@ -4,11 +4,13 @@
 services:
   trader:
     build: .
+    env_file: 
+      - .env
     container_name: trader
     volumes:
       - ./src:/app/src
     ports:
-    - "8888:8888"
+      - "8888:8888"
     
     restart: unless-stopped
 
