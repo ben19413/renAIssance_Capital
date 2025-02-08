@@ -3,9 +3,10 @@ from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
 
 def classifier(features_df):
-
-    X_train = features_df.drop('Target',axis = 1)
-    y_train = features_df['Target']
+    
+    X = features_df.drop('Target',axis = 1)
+    X_train = X.iloc[:-1]
+    y_train = features_df['Target'].iloc[:-1]
 
     # TODO: Make sure this is right
     classes = np.unique(y_train)
@@ -31,8 +32,7 @@ def classifier(features_df):
 
 
     model = lgb.train(params, lgb_train)
-
-    probs = model.predict(X_train.tail(1))
+    probs = model.predict(X.tail(1))
 
     trade = np.argmax(probs, axis=1)
 
