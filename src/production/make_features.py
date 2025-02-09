@@ -86,9 +86,11 @@ def make_features(df):
     df["bollinger_hband"] = bollinger.bollinger_hband()
     df["bollinger_lband"] = bollinger.bollinger_lband()
 
-    # Average True Range (ATR)
     df["ATR"] = ta.volatility.AverageTrueRange(
-        df["High"], df["Low"], df["Close"], window=14
+        df["High"],
+        df["Low"],
+        df["Close"],
+        window=14,
     ).average_true_range()
 
     # Stochastic Oscillator

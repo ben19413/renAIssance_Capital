@@ -1,0 +1,19 @@
+Trade Analysis Report
+========================================
+Total Trades: 103
+Winning Trades: 41
+Losing Trades: 62
+Win Rate (%): 39.80582524271845
+Total Profit: -7902.237232893269
+Average Profit per Trade: -76.72074983391524
+Average Win: 616.0475591113869
+Average Loss: -534.8417283300021
+Profit Factor: 0.7616950352056807
+Sharpe Ratio: -1.234241305440196
+Maximum Drawdown: -10231.03024490465
+Maximum Drawdown (%): -1190.145997956376
+
+Graphs:
+Equity Curve: analysis_output/equity_curve.png
+Profit Histogram: analysis_output/profit_histogram.png
+Trade Duration Histogram: analysis_output/trade_duration_histogram.png
