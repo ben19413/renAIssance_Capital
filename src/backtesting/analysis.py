@@ -186,7 +186,7 @@ def compute_trade_statistics(df):
 
     # Build the equity curve (cumulative sum of trade profits).
     trades_df = trades_df.sort_index()  # Assuming the index represents the exit time.
-    equity = trades_df["realised_profit"].cumsum()
+    equity = trades_df["win"].cumsum()
 
     # Maximum drawdown calculation.
     peak = equity.expanding().max()
@@ -200,16 +200,17 @@ def compute_trade_statistics(df):
         "Winning Trades": num_wins,
         "Losing Trades": num_losses,
         "Win Rate (%)": win_rate,
+        "Maximum Drawdown": max_drawdown,
+        "Maximum Drawdown (%)": (
+            max_drawdown_pct * 100 if not np.isnan(max_drawdown_pct) else np.nan
+        ),
+        "--- BELOW NOT CONFIGURED TO BE ACCURATE FOR OUR STRATEGY ---":'',
         "Total Profit": total_profit,
         "Average Profit per Trade": avg_profit,
         "Average Win": avg_win,
         "Average Loss": avg_loss,
         "Profit Factor": profit_factor,
-        "Sharpe Ratio": sharpe_ratio,
-        "Maximum Drawdown": max_drawdown,
-        "Maximum Drawdown (%)": (
-            max_drawdown_pct * 100 if not np.isnan(max_drawdown_pct) else np.nan
-        ),
+        "Sharpe Ratio": sharpe_ratio
     }
     return stats, trades_df
 
@@ -222,7 +223,7 @@ def plot_equity_curve(trades_df, output_folder):
     Plots the equity curve (cumulative profit) over time.
     """
     trades_sorted = trades_df.sort_index()
-    equity = trades_sorted["realised_profit"].cumsum()
+    equity = trades_sorted["win"].cumsum()
 
     plt.figure(figsize=(10, 6))
     plt.plot(trades_sorted.index, equity, marker="o", linestyle="-")
@@ -237,25 +238,25 @@ def plot_equity_curve(trades_df, output_folder):
     return equity_curve_path
 
 
-def plot_profit_histogram(trades_df, output_folder):
-    """
-    Plots a histogram (with kernel density) of trade profit/loss.
-    """
-    plt.figure(figsize=(10, 6))
-    sns.histplot(trades_df["realised_profit"], bins=30, kde=True)
-    plt.title("Histogram of Trade Profit/Loss")
-    plt.xlabel("Profit/Loss")
-    plt.ylabel("Frequency")
+# def plot_profit_histogram(trades_df, output_folder):
+#     """
+#     Plots a histogram (with kernel density) of trade profit/loss.
+#     """
+#     plt.figure(figsize=(10, 6))
+#     sns.histplot(trades_df["realised_profit"], bins=30, kde=True)
+#     plt.title("Histogram of Trade Profit/Loss")
+#     plt.xlabel("Profit/Loss")
+#     plt.ylabel("Frequency")
 
-    hist_path = os.path.join(output_folder, "profit_histogram.png")
-    plt.savefig(hist_path)
-    plt.close()
-    return hist_path
+#     hist_path = os.path.join(output_folder, "profit_histogram.png")
+#     plt.savefig(hist_path)
+#     plt.close()
+#     return hist_path
 
 
 def plot_trade_duration(df, output_folder):
     """
-    (Optional) If your dataframe doesn’t store each trade’s duration, this example
+    (Optional) If your dataframe doesn't store each trade's duration, this example
     computes the time between consecutive trade exit times as a proxy for trade frequency.
     """
     trades_df = df.dropna(subset=["realised_profit"]).sort_index()
@@ -289,7 +290,6 @@ def generate_analysis_report(df, output_folder="analysis_output"):
 
     # Generate plots.
     equity_curve_path = plot_equity_curve(trades_df, output_folder)
-    hist_path = plot_profit_histogram(trades_df, output_folder)
     duration_path = plot_trade_duration(df, output_folder)
 
     # Build a text-based report.
@@ -300,7 +300,6 @@ def generate_analysis_report(df, output_folder="analysis_output"):
         report_lines.append(f"{key}: {value}")
     report_lines.append("\nGraphs:")
     report_lines.append(f"Equity Curve: {equity_curve_path}")
-    report_lines.append(f"Profit Histogram: {hist_path}")
     report_lines.append(f"Trade Duration Histogram: {duration_path}")
 
     report_text = "\n".join(report_lines)
