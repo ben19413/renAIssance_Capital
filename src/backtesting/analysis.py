@@ -30,14 +30,11 @@ import seaborn as sns
 
 
 def analysis(full_backtesting_df, results_df):
-    print(full_backtesting_df)
-    print(results_df)
 
     trades_df = full_backtesting_df.join(results_df, how="left")
     outcome_df = calculate_realised_profit(trades_df)
     generate_analysis_report(outcome_df)
 
-    print(outcome_df)
 
 
 def calculate_realised_profit(df):
@@ -254,6 +251,7 @@ def plot_equity_curve(trades_df, output_folder):
 #     return hist_path
 
 
+# TODO: Check logic here correct
 def plot_trade_duration(df, output_folder):
     """
     (Optional) If your dataframe doesn't store each trade's duration, this example

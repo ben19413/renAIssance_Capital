@@ -1,3 +1,4 @@
 __pycache__/
+analysis_output/
 *.py[cod]
 *.log
