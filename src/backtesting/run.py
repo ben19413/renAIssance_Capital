@@ -38,7 +38,7 @@ for training_end_point in tqdm(training_end_point_df.index):
 
     
     if trade != 0:
-        stop_loss, take_profit, atr = ATR(features_df, trade)
+        stop_loss, take_profit, atr = ATR(features_df, trade, config["risk_to_reward_ratio"])
     else:
         stop_loss = None
         take_profit = None
