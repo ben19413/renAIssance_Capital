@@ -11,11 +11,17 @@ from datetime import timedelta
 import numpy as np
 import os
 import warnings
+import json
 
 warnings.filterwarnings("ignore")
 
-backtest_start_date_time = pd.to_datetime(os.getenv("backtest_start_date_time"))
-backtest_end_date_time = pd.to_datetime(os.getenv("backtest_end_date_time"))
+CONFIG_PATH = os.getenv("config_path")
+
+with open(CONFIG_PATH, "r") as file:
+    config = json.load(file)
+
+backtest_start_date_time = pd.to_datetime(config["backtest_start_date_time"])
+backtest_end_date_time = pd.to_datetime(config["backtest_end_date_time"])
 
 results_df = pd.DataFrame(columns=["trade", "stop_loss", "take_profit"])
 
@@ -27,7 +33,7 @@ training_end_point_df = full_backtesting_df.loc[
 for training_end_point in tqdm(training_end_point_df.index):
 
     training_start_point = training_end_point - timedelta(
-        hours=int(os.getenv("training_period_data_size"))
+        hours=config["training_period_data_size"]
     )
 
     training_df = full_backtesting_df.loc[training_start_point:training_end_point]
@@ -37,7 +43,7 @@ for training_end_point in tqdm(training_end_point_df.index):
     trade = classifier(features_df)
 
     if trade != 0:
-        stop_loss, take_profit = ATR(features_df, trade)
+        stop_loss, take_profit = ATR(features_df, trade, config["risk_to_reward_ratio"])
     else:
         stop_loss = None
         take_profit = None
