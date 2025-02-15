@@ -36,7 +36,6 @@ def analysis(full_backtesting_df, results_df):
     generate_analysis_report(outcome_df)
 
 
-
 def calculate_realised_profit(df):
     """
     Adds two columns to the DataFrame:
@@ -213,13 +212,13 @@ def compute_trade_statistics(df):
         "Maximum Drawdown (%)": (
             max_drawdown_pct * 100 if not np.isnan(max_drawdown_pct) else np.nan
         ),
-        "--- BELOW NOT CONFIGURED TO BE ACCURATE FOR OUR STRATEGY ---":'',
+        "--- BELOW NOT CONFIGURED TO BE ACCURATE FOR OUR STRATEGY ---": "",
         "Total Profit": total_profit,
         "Average Profit per Trade": avg_profit,
         "Average Win": avg_win,
         "Average Loss": avg_loss,
         "Profit Factor": profit_factor,
-        "Sharpe Ratio": sharpe_ratio
+        "Sharpe Ratio": sharpe_ratio,
     }
     return stats, trades_df
 
