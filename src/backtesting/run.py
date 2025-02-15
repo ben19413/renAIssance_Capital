@@ -17,7 +17,7 @@ warnings.filterwarnings("ignore")
 backtest_start_date_time = pd.to_datetime(os.getenv("backtest_start_date_time"))
 backtest_end_date_time = pd.to_datetime(os.getenv("backtest_end_date_time"))
 
-results_df = pd.DataFrame(columns=["trade", "stop_loss", "take_profit"])
+results_df = pd.DataFrame(columns=["trade", "stop_loss", "take_profit" ,"ATR"])
 
 full_backtesting_df = get_backtesting_data().iloc[::-1]
 
@@ -36,17 +36,20 @@ for training_end_point in tqdm(training_end_point_df.index):
 
     trade = classifier(features_df)
 
+    
     if trade != 0:
-        stop_loss, take_profit = ATR(features_df, trade)
+        stop_loss, take_profit, atr = ATR(features_df, trade)
     else:
         stop_loss = None
         take_profit = None
+        atr = None
 
     iteration_df = pd.DataFrame(
         {
             "trade": trade,
             "stop_loss": [stop_loss if stop_loss is not None else np.nan],
             "take_profit": [take_profit if take_profit is not None else np.nan],
+            "ATR": [atr if atr is not None else np.nan],
         }
     )
 

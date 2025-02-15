@@ -13,4 +13,4 @@ def ATR(features_df, trade):
         take_profit = close_price - int(os.getenv("risk_to_reward_ratio")) * ATR
         stop_loss = close_price + ATR
 
-    return stop_loss, take_profit
+    return stop_loss, take_profit, ATR
