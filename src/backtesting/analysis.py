@@ -197,6 +197,8 @@ def compute_trade_statistics(df):
         "Winning Trades": num_wins,
         "Losing Trades": num_losses,
         "Win Rate (%)": win_rate,
+        "Profit (Accounting for R2R)": num_wins *int(os.getenv("risk_to_reward_ratio")) - num_losses,
+        "--- ONLY APPLICABLE IS RISK TO REWARD IS 1 ---":'',
         "Maximum Drawdown": max_drawdown,
         "Maximum Drawdown (%)": (
             max_drawdown_pct * 100 if not np.isnan(max_drawdown_pct) else np.nan
