@@ -1,1 +1,8 @@
-input handling including making sure backtest start date within backtest length of start of dataset
+input handling including:
+    backteststart date atleast training period length away from start of the dataset
+    make sure specified dates are within the dataset
+    make sure train length shorter than dataset length 
+    
+put config variable descriptions into a table in readme
+
+move files outside of src

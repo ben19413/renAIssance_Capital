@@ -63,5 +63,4 @@ for training_end_point in tqdm(training_end_point_df.index):
 
 results_df.index = training_end_point_df.index
 
-analysis(full_backtesting_df, results_df)
-# call get analysis (input: results_df) (output: plots, summarisation etc)
+analysis(full_backtesting_df, results_df, config)

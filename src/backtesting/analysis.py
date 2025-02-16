@@ -3,6 +3,7 @@ import numpy as np
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
+import json
 
 # take results_df
 
@@ -29,11 +30,11 @@ import seaborn as sns
 #
 
 
-def analysis(full_backtesting_df, results_df):
+def analysis(full_backtesting_df, results_df, config):
 
     trades_df = full_backtesting_df.join(results_df, how="left")
     outcome_df = calculate_realised_profit(trades_df)
-    generate_analysis_report(outcome_df)
+    generate_analysis_report(outcome_df, "analysis_output", config)
 
 
 def calculate_realised_profit(df):
@@ -147,7 +148,7 @@ def calculate_realised_profit(df):
     return df
 
 
-def compute_trade_statistics(df):
+def compute_trade_statistics(df, risk_to_reward):
     """
     Compute statistics on trades.
     Only rows with a non-NaN 'realised_profit' are considered trades.
@@ -205,8 +206,8 @@ def compute_trade_statistics(df):
         "Win Rate (%)": win_rate,
         "Total Fees": total_fees,
         "Average Fees": average_fee,
-        "Profit % (Accounting for R2R)": num_wins *int(os.getenv("risk_to_reward_ratio")) - num_losses,
-        "Profit % (Accounting for R2R and fees)": round(num_wins *int(os.getenv("risk_to_reward_ratio")) - num_losses - total_fees,2),
+        "Profit % (Accounting for R2R)": num_wins * risk_to_reward - num_losses,
+        "Profit % (Accounting for R2R and fees)": round(num_wins * risk_to_reward - num_losses - total_fees,2),
         "--- ONLY APPLICABLE IS RISK TO REWARD IS 1 ---":'',
         "Maximum Drawdown": max_drawdown,
         "Maximum Drawdown (%)": (
@@ -286,7 +287,7 @@ def plot_trade_duration(df, output_folder):
 # -------------------------------
 # Report Generation
 # -------------------------------
-def generate_analysis_report(df, output_folder="analysis_output"):
+def generate_analysis_report(df, output_folder, config):
     """
     Computes statistics, generates plots, and writes a text report summarizing the analysis.
     """
@@ -295,7 +296,7 @@ def generate_analysis_report(df, output_folder="analysis_output"):
         os.makedirs(output_folder)
 
     # Compute trade statistics and filter trades.
-    stats, trades_df = compute_trade_statistics(df)
+    stats, trades_df = compute_trade_statistics(df, config["risk_to_reward_ratio"])
 
     # Generate plots.
     equity_curve_path = plot_equity_curve(trades_df, output_folder)
@@ -319,4 +320,9 @@ def generate_analysis_report(df, output_folder="analysis_output"):
         f.write(report_text)
 
     print("Analysis report saved to:", report_file)
-    return report_file
+
+    config_path = os.path.join(output_folder, "config.json")
+    with open(config_path, "w") as json_file:
+        json.dump(config, json_file, indent=4)
+    print(f"Config saved to: {config_path}")
+
