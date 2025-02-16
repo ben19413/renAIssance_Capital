@@ -140,6 +140,10 @@ def calculate_realised_profit(df):
     df["ambiguous_outcome"] = ambiguous_result
     df["exit_time"] = exit_index
 
+    # Assumes risk 1000 dollars, 1% of 100000 account
+    df['fee'] = np.where( df["win"] == np.nan, 0, 1000/df['ATR'] * 7)
+    df['fee_percent'] = 100 * df['fee']/100000
+
     return df
 
 
@@ -191,14 +195,19 @@ def compute_trade_statistics(df):
     # As a percentage:
     max_drawdown_pct = (drawdown / peak).min() if (peak > 0).all() else np.nan
 
+    total_fees = trades_df['fee_percent'].sum()
+    average_fee = trades_df[trades_df['fee']!= np.nan]['fee_percent'].mean()
+
     stats = {
         "Total Trades": total_trades,
         "Winning Trades": num_wins,
         "Losing Trades": num_losses,
         "Win Rate (%)": win_rate,
-        "Profit (Accounting for R2R)": num_wins * int(os.getenv("risk_to_reward_ratio"))
-        - num_losses,
-        "--- ONLY APPLICABLE IS RISK TO REWARD IS 1 ---": "",
+        "Total Fees": total_fees,
+        "Average Fees": average_fee,
+        "Profit % (Accounting for R2R)": num_wins *int(os.getenv("risk_to_reward_ratio")) - num_losses,
+        "Profit % (Accounting for R2R and fees)": round(num_wins *int(os.getenv("risk_to_reward_ratio")) - num_losses - total_fees,2),
+        "--- ONLY APPLICABLE IS RISK TO REWARD IS 1 ---":'',
         "Maximum Drawdown": max_drawdown,
         "Maximum Drawdown (%)": (
             max_drawdown_pct * 100 if not np.isnan(max_drawdown_pct) else np.nan

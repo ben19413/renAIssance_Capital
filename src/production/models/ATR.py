@@ -14,4 +14,4 @@ def ATR(features_df, trade, r2r):
         take_profit = close_price - r2r * ATR
         stop_loss = close_price + ATR
 
-    return stop_loss, take_profit
+    return stop_loss, take_profit, ATR
