@@ -34,7 +34,7 @@ def analysis(full_backtesting_df, results_df, config):
 
     trades_df = full_backtesting_df.join(results_df, how="left")
     outcome_df = calculate_realised_profit(trades_df)
-    generate_analysis_report(outcome_df, "analysis_output", config)
+    generate_analysis_report(outcome_df, "analysis_output", full_backtesting_df, config)
 
 
 def calculate_realised_profit(df):
@@ -42,7 +42,6 @@ def calculate_realised_profit(df):
     Adds two columns to the DataFrame:
       - 'realised_profit': The profit/loss for a trade based on future price data.
       - 'exit_index': The datetime index where the trade's take profit or stop loss was hit.
-
     Assumptions:
       - The DataFrame index is datetime.
       - 'trade': 0 = no trade, 1 = short, 2 = long.
@@ -283,11 +282,97 @@ def plot_trade_duration(df, output_folder):
     plt.close()
     return duration_path
 
+def plot_equity_and_stock_price(trades_df, full_backtesting_df, output_folder):
+    """
+    Plots the equity curve (cumulative profit) alongside the stock price over time.
+    Only considers the period where the equity curve is defined.
+    """
+    trades_sorted = trades_df.sort_index()
+    equity = trades_sorted["win"].cumsum()
+
+    # Define the date range based on trades_df
+    start_date = trades_sorted.index.min()
+    end_date = trades_sorted.index.max()
+
+    # Ensure full_backtesting_df index is datetime and filter to matching range
+    full_backtesting_df.index = pd.to_datetime(full_backtesting_df.index)
+    filtered_stock_prices = full_backtesting_df.loc[start_date:end_date]
+
+    plt.figure(figsize=(12, 6))
+    fig, ax1 = plt.subplots(figsize=(12, 6))
+
+    # Plot stock price within the filtered range
+    ax1.plot(filtered_stock_prices.index, filtered_stock_prices["Close"], color="blue", alpha=0.7, label="Stock Price")
+    ax1.set_xlabel("Date")
+    ax1.set_ylabel("Stock Price", color="blue")
+    ax1.tick_params(axis="y", labelcolor="blue")
+
+    # Create secondary axis for equity curve
+    ax2 = ax1.twinx()
+    ax2.plot(trades_sorted.index, equity, color="green", marker="o", linestyle="-", label="Equity Curve")
+    ax2.set_ylabel("Cumulative Profit", color="green")
+    ax2.tick_params(axis="y", labelcolor="green")
+
+    # Add legends
+    ax1.legend(loc="upper left")
+    ax2.legend(loc="upper right")
+
+    plt.title("Equity Curve vs Stock Price")
+
+    # Save the plot
+    output_path = os.path.join(output_folder, "equity_vs_stock_price.png")
+    plt.savefig(output_path)
+    plt.close()
+
+    return output_path
+
+
+def plot_stock_price_with_buy_sell(full_backtesting_df, trades_df, output_folder):
+    """
+    Plots the stock price from the first trade date onward with indications of where buys and sells occurred.
+    """
+    # Filter out rows where trade is 0 (no action)
+    trades_filtered = trades_df[trades_df['trade'] != 0]
+
+    # Get the first date when a trade occurs
+    first_trade_date = trades_filtered.index[0]
+
+    # Filter the full stock data to start from the first trade date
+    full_backtesting_filtered = full_backtesting_df[full_backtesting_df.index >= first_trade_date]
+
+    # Get buy and sell points based on the 'trade' column
+    buy_points = trades_filtered[trades_filtered['trade'] == 2]  # Buy actions
+    sell_points = trades_filtered[trades_filtered['trade'] == 1]  # Sell actions
+
+    plt.figure(figsize=(12, 6))
+
+    # Plot the stock price from the first trade date onward
+    plt.plot(full_backtesting_filtered.index, full_backtesting_filtered["Close"], color="blue", alpha=0.7, label="Stock Price")
+
+    # Plot buy points
+    plt.scatter(buy_points.index, full_backtesting_df.loc[buy_points.index, "Close"], color="green", marker="^", label="Buy", s=100)
+
+    # Plot sell points
+    plt.scatter(sell_points.index, full_backtesting_df.loc[sell_points.index, "Close"], color="red", marker="v", label="Sell", s=100)
+
+    # Add labels and legend
+    plt.xlabel("Date")
+    plt.ylabel("Stock Price")
+    plt.title("Stock Price with Buy and Sell Indications")
+    plt.legend(loc="best")
+
+    # Save the plot
+    output_path = os.path.join(output_folder, "stock_price_with_buy_sell.png")
+    plt.savefig(output_path)
+    plt.close()
+
+    return output_path
+
 
 # -------------------------------
 # Report Generation
 # -------------------------------
-def generate_analysis_report(df, output_folder, config):
+def generate_analysis_report(df, output_folder, full_backtesting_df, config):
     """
     Computes statistics, generates plots, and writes a text report summarizing the analysis.
     """
@@ -301,6 +386,8 @@ def generate_analysis_report(df, output_folder, config):
     # Generate plots.
     equity_curve_path = plot_equity_curve(trades_df, output_folder)
     duration_path = plot_trade_duration(df, output_folder)
+    equity_stock_price_path = plot_equity_and_stock_price(trades_df, full_backtesting_df, output_folder)
+    stock_price_with_buy_sell_path = plot_stock_price_with_buy_sell(full_backtesting_df, trades_df, output_folder)
 
     # Build a text-based report.
     report_lines = []
@@ -311,6 +398,8 @@ def generate_analysis_report(df, output_folder, config):
     report_lines.append("\nGraphs:")
     report_lines.append(f"Equity Curve: {equity_curve_path}")
     report_lines.append(f"Trade Duration Histogram: {duration_path}")
+    report_lines.append(f"Equity vs Stock Price: {equity_stock_price_path}")
+    report_lines.append(f"Stock Price with Buy and Sell Indications: {stock_price_with_buy_sell_path}")
 
     report_text = "\n".join(report_lines)
 
@@ -325,4 +414,3 @@ def generate_analysis_report(df, output_folder, config):
     with open(config_path, "w") as json_file:
         json.dump(config, json_file, indent=4)
     print(f"Config saved to: {config_path}")
-
