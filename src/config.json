@@ -1,0 +1,6 @@
+{
+    "training_period_data_size": 4545,
+    "backtest_start_date_time": "2024-05-22 18:00",
+    "backtest_end_date_time": "2024-05-26 18:00",
+    "risk_to_reward_ratio": 1
+  }
