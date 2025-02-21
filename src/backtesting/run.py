@@ -31,7 +31,6 @@ training_end_point_df = full_backtesting_df.loc[
     backtest_start_date_time:backtest_end_date_time
 ]
 for training_end_point in tqdm(training_end_point_df.index):
-
     training_start_point = training_end_point - timedelta(
         hours=config["training_period_data_size"]
     )
