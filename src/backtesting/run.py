@@ -63,4 +63,7 @@ for training_end_point in tqdm(training_end_point_df.index):
 
 results_df.index = training_end_point_df.index
 
-analysis(full_backtesting_df, results_df, config)
+if results_df['trade'].sum() != 0:
+    analysis(full_backtesting_df, results_df, config)
+else:
+    print('Analysis module off - no trades taken')

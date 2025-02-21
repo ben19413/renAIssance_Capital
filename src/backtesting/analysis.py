@@ -36,7 +36,6 @@ def analysis(full_backtesting_df, results_df, config):
     outcome_df = calculate_realised_profit(trades_df, config["risk_to_reward_ratio"])
     generate_analysis_report(outcome_df, "analysis_output", full_backtesting_df, config)
 
-
 def calculate_realised_profit(df, risk_to_reward):
     """
     Adds two columns to the DataFrame:
