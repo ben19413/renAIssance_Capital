@@ -33,11 +33,11 @@ import json
 def analysis(full_backtesting_df, results_df, config):
 
     trades_df = full_backtesting_df.join(results_df, how="left")
-    outcome_df = calculate_realised_profit(trades_df)
+    outcome_df = calculate_realised_profit(trades_df, config["risk_to_reward_ratio"])
     generate_analysis_report(outcome_df, "analysis_output", full_backtesting_df, config)
 
 
-def calculate_realised_profit(df):
+def calculate_realised_profit(df, risk_to_reward):
     """
     Adds two columns to the DataFrame:
       - 'realised_profit': The profit/loss for a trade based on future price data.
@@ -135,7 +135,7 @@ def calculate_realised_profit(df):
     # Add the computed arrays as new columns.
     df["realised_profit"] = realised_profit
     df["win"] = np.where(
-        df["realised_profit"] > 0, 1, np.where(df["realised_profit"] < 0, -1, np.nan)
+        df["realised_profit"] > 0, risk_to_reward, np.where(df["realised_profit"] < 0, -1, np.nan)
     )
     df["ambiguous_outcome"] = ambiguous_result
     df["exit_time"] = exit_index
