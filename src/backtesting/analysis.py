@@ -386,7 +386,7 @@ def generate_analysis_report(df, output_folder, full_backtesting_df, config):
     # Generate plots.
     equity_curve_path = plot_equity_curve(trades_df, output_folder)
     duration_path = plot_trade_duration(df, output_folder)
-    equity_stock_price_path = plot_equity_and_stock_price(trades_df, full_backtesting_df, output_folder)
+    # equity_stock_price_path = plot_equity_and_stock_price(trades_df, full_backtesting_df, output_folder)
     stock_price_with_buy_sell_path = plot_stock_price_with_buy_sell(full_backtesting_df, trades_df, output_folder)
 
     # Build a text-based report.
@@ -398,7 +398,7 @@ def generate_analysis_report(df, output_folder, full_backtesting_df, config):
     report_lines.append("\nGraphs:")
     report_lines.append(f"Equity Curve: {equity_curve_path}")
     report_lines.append(f"Trade Duration Histogram: {duration_path}")
-    report_lines.append(f"Equity vs Stock Price: {equity_stock_price_path}")
+    # report_lines.append(f"Equity vs Stock Price: {equity_stock_price_path}")
     report_lines.append(f"Stock Price with Buy and Sell Indications: {stock_price_with_buy_sell_path}")
 
     report_text = "\n".join(report_lines)
