@@ -23,7 +23,7 @@ with open(CONFIG_PATH, "r") as file:
 backtest_start_date_time = pd.to_datetime(config["backtest_start_date_time"])
 backtest_end_date_time = pd.to_datetime(config["backtest_end_date_time"])
 
-results_df = pd.DataFrame(columns=["trade", "stop_loss", "take_profit" ,"ATR"])
+results_df = pd.DataFrame(columns=["trade", "stop_loss", "take_profit", "ATR"])
 
 full_backtesting_df = get_backtesting_data().iloc[::-1]
 
@@ -42,9 +42,10 @@ for training_end_point in tqdm(training_end_point_df.index):
 
     trade = classifier(features_df)
 
-    
     if trade != 0:
-        stop_loss, take_profit, atr = ATR(features_df, trade, config["risk_to_reward_ratio"])
+        stop_loss, take_profit, atr = ATR(
+            features_df, trade, config["risk_to_reward_ratio"]
+        )
     else:
         stop_loss = None
         take_profit = None
@@ -62,9 +63,9 @@ for training_end_point in tqdm(training_end_point_df.index):
     results_df = pd.concat([results_df, iteration_df], ignore_index=True)
 
 results_df.index = training_end_point_df.index
-print(results_df.shape)
 
-if results_df['trade'].sum() != 0:
+
+if results_df["trade"].sum() != 0:
     analysis(full_backtesting_df, results_df, config)
 else:
-    print('Analysis module off - no trades taken')
+    print("Analysis module off - no trades taken")
