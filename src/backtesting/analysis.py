@@ -28,15 +28,21 @@ import json
 
 # baso same thing but plotted over time
 #
+CONFIG_PATH = os.getenv("config_path")
+
+with open(CONFIG_PATH, "r") as file:
+    config = json.load(file)
 
 
 def analysis(full_backtesting_df, results_df, config):
 
     trades_df = full_backtesting_df.join(results_df, how="left")
-    outcome_df = calculate_realised_profit(trades_df, config["risk_to_reward_ratio"])
+    outcome_df = calculate_realised_profit(trades_df, config["risk_to_reward_ratio"],config)
     generate_analysis_report(outcome_df, "analysis_output", full_backtesting_df, config)
+    print(trades_df.shape)
+    print(outcome_df.shape)
 
-def calculate_realised_profit(df, risk_to_reward):
+def calculate_realised_profit(df, risk_to_reward,config):
     """
     Adds two columns to the DataFrame:
       - 'realised_profit': The profit/loss for a trade based on future price data.
@@ -140,8 +146,10 @@ def calculate_realised_profit(df, risk_to_reward):
     df["exit_time"] = exit_index
 
     # Assumes risk 1000 dollars, 1% of 100000 account
-    df['fee'] = np.where( df["win"] == np.nan, 0, 1000/df['ATR'] * 7)
-    df['fee_percent'] = 100 * df['fee']/100000
+    #df['fee'] = np.where( df["win"] == np.nan, 0, 1000/df['ATR'] * 7)
+    df['fee'] = np.where(df["win"] == np.nan, 0,(7/100000)*((config["account_size"]*config["percent_risk"])/df['ATR']))
+    df['fee_percent'] = 100 * df['fee']/config['account_size']
+    #df.to_csv("testdf.csv")
 
     return df
 
