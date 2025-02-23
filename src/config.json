@@ -4,6 +4,7 @@
     "backtest_end_date_time": "2022-09-21 18:00",
     "risk_to_reward_ratio": 3,
     "account_size":1000,
-    "risk_per_trade_percent":1
+    "risk_per_trade_percent":1,
+    "backtesting_data_name": "NEWEURUSDtest.csv"
 
   }
