@@ -7,5 +7,6 @@ import pandas as pd
 def process_api_data(json):
 
     live_df = pd.DataFrame(json).iloc[::-1]
+    live_df.index = pd.to_datetime(live_df["Time"])
 
     return live_df

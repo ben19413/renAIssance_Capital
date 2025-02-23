@@ -5,10 +5,20 @@ import lightgbm as lgb
 from datetime import datetime
 import datetime as dt
 import uvicorn as uv
+import os
+import json
 
-from production.remote import process_api_data
+from production.remote.process_api_data import process_api_data
+from production.make_features import make_features
+from production.models.classifier import classifier
+from production.models.ATR import ATR
 
 app = FastAPI()
+
+CONFIG_PATH = os.getenv("config_path_production")
+
+with open(CONFIG_PATH, "r") as file:
+    config = json.load(file)
 
 @app.get('/')
 def read_root():
@@ -19,7 +29,24 @@ def read_root():
 @app.post('/train_and_predict')
 def train_and_predict(json: dict):
     live_df = process_api_data(json)
-    
-    return live_df.to_dict()
+    features_df = make_features(live_df)
+
+    trade = classifier(features_df)
+
+    if trade != 0:
+        stop_loss, take_profit, atr = ATR(
+            features_df, trade, config["risk_to_reward_ratio"]
+        )
+    else:
+        stop_loss = None
+        take_profit = None
+        atr = None
+
+    return {
+            "trade": trade,
+            "stop_loss": [stop_loss if stop_loss is not None else np.nan],
+            "take_profit": [take_profit if take_profit is not None else np.nan],
+            "ATR": [atr if atr is not None else np.nan],
+        }
 
 
