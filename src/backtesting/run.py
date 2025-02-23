@@ -25,7 +25,7 @@ backtest_end_date_time = pd.to_datetime(config["backtest_end_date_time"])
 
 results_df = pd.DataFrame(columns=["trade", "stop_loss", "take_profit", "ATR"])
 
-full_backtesting_df = get_backtesting_data().iloc[::-1]
+full_backtesting_df = get_backtesting_data(config["backtesting_data_name"])
 
 
 training_end_point_df = full_backtesting_df.loc[
