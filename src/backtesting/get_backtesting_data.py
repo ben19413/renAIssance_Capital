@@ -5,8 +5,9 @@ import pandas as pd
 # TODO: REPLACE HACK WITH LIVE DATA SOURCE
 
 
-def get_backtesting_data():
+def get_backtesting_data(backtesting_data_name):
 
-    full_backtesting_data = pd.read_csv("../files/EURUSD_full_test.csv")
+    full_backtesting_data = pd.read_csv(f"../files/{backtesting_data_name}").iloc[::-1]
     full_backtesting_data.index = pd.to_datetime(full_backtesting_data["Time"])
+
     return full_backtesting_data
