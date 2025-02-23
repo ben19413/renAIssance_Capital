@@ -42,7 +42,10 @@ def train_and_predict(json: dict):
         take_profit = None
         atr = None
 
+    time = features_df.tail(1).index.iloc[0]
+
     return {
+            "time": time,
             "trade": trade,
             "stop_loss": [stop_loss if stop_loss is not None else np.nan],
             "take_profit": [take_profit if take_profit is not None else np.nan],
