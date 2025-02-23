@@ -15,7 +15,7 @@
     
     
     # Copy common files
-    COPY src/ /app/src/
+   
     
     # -------------------------------
     # Production Stage: production image
@@ -26,6 +26,7 @@
     # Copy production-specific requirements file
     COPY src/production/ /app/production/
     COPY production_requirements.txt /app/
+    COPY src/config_production.json /app/production/
     EXPOSE 8000
     # Install only production dependencies
 
