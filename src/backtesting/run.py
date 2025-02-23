@@ -1,9 +1,9 @@
 from backtesting.get_backtesting_data import get_backtesting_data
+from production.models.classifier import classifier
+from production.models.ATR import ATR
+from production.make_features import make_features
 from backtesting.analysis import analysis
 
-from production.make_features import make_features
-from production.models.ATR import ATR
-from production.models.classifier import classifier
 from tqdm import tqdm
 
 import pandas as pd
@@ -15,7 +15,7 @@ import json
 
 warnings.filterwarnings("ignore")
 
-CONFIG_PATH = os.getenv("config_path")
+CONFIG_PATH = os.getenv("config_path_development")
 
 with open(CONFIG_PATH, "r") as file:
     config = json.load(file)
@@ -35,7 +35,7 @@ for training_end_point in tqdm(training_end_point_df.index):
     training_start_point = training_end_point - timedelta(
         hours=config["training_period_data_size"]
     )
-
+    
     training_df = full_backtesting_df.loc[training_start_point:training_end_point]
 
     features_df = make_features(training_df)

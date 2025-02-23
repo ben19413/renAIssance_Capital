@@ -5,6 +5,6 @@
     "risk_to_reward_ratio": 3,
     "account_size":1000,
     "risk_per_trade_percent":1,
-    "backtesting_data_name": "NEWEURUSDtest.csv"
+    "backtesting_data_name": "EURUSD_full_test.csv"
 
   }
