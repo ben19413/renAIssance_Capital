@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-EXPOSE 8888
+EXPOSE 8000 8888
 
 # Clone public repository FIRST
 COPY setup.py .
@@ -26,6 +26,8 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 RUN pip install .
 
 # Command to run your script
-CMD ["tail", "-f", "/dev/null"]
+# CMD ["tail", "-f", "/dev/null"]
+
+CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "8000"]
 
 
