@@ -38,4 +38,4 @@ def classifier(features_df):
 
     trade = np.argmax(probs, axis=1)
 
-    return trade
+    return int(trade)

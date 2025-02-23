@@ -28,6 +28,7 @@ def read_root():
 
 @app.post('/train_and_predict')
 def train_and_predict(json: dict):
+
     live_df = process_api_data(json)
     features_df = make_features(live_df)
 
@@ -42,14 +43,12 @@ def train_and_predict(json: dict):
         take_profit = None
         atr = None
 
-    time = features_df.tail(1).index.iloc[0]
+    time = str(features_df.tail(1).index[0])
 
     return {
-            "time": time,
-            "trade": trade,
-            "stop_loss": [stop_loss if stop_loss is not None else np.nan],
-            "take_profit": [take_profit if take_profit is not None else np.nan],
-            "ATR": [atr if atr is not None else np.nan],
-        }
-
-
+        "time": time,
+        "trade": trade,
+        "stop_loss": stop_loss,
+        "take_profit": take_profit,
+        "ATR": atr
+    }
