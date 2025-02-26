@@ -30,13 +30,13 @@ import json
 #
 
 
-def analysis(full_backtesting_df, results_df, config):
+def analysis(full_backtesting_df, results_df, config, trial):
 
     trades_df = full_backtesting_df.join(results_df, how="left")
     outcome_df = calculate_realised_profit(
-        trades_df, config["risk_to_reward_ratio"], config
+        trades_df, config["other"]["risk_to_reward_ratio"], config
     )
-    generate_analysis_report(outcome_df, "analysis_output", full_backtesting_df, config)
+    generate_analysis_report(outcome_df, f"analysis/{trial}", full_backtesting_df, config)
 
 
 def calculate_realised_profit(df, risk_to_reward, config):
@@ -149,11 +149,11 @@ def calculate_realised_profit(df, risk_to_reward, config):
         0,
         (7 / 100000)
         * (
-            (config["account_size"] * (config["risk_per_trade_percent"]) / 100)
+            (config["other"]["account_size"] * (config["other"]["risk_per_trade_percent"]) / 100)
             / df["ATR"]
         ),
     )
-    df["fee_percent"] = 100 * df["fee"] / config["account_size"]
+    df["fee_percent"] = 100 * df["fee"] / config["other"]["account_size"]
 
     return df
 
@@ -430,7 +430,7 @@ def generate_analysis_report(df, output_folder, full_backtesting_df, config):
         os.makedirs(output_folder)
 
     # Compute trade statistics and filter trades.
-    stats, trades_df = compute_trade_statistics(df, config["risk_to_reward_ratio"])
+    stats, trades_df = compute_trade_statistics(df, config["other"]["risk_to_reward_ratio"])
 
     # Generate plots.
     equity_curve_path = plot_equity_curve(trades_df, output_folder)
