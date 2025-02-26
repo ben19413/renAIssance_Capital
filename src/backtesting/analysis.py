@@ -158,7 +158,7 @@ def calculate_realised_profit(df, risk_to_reward, config):
     return df
 
 
-def compute_trade_statistics(df, risk_to_reward):
+def compute_trade_statistics(df, risk_to_reward, config):
     """
     Compute statistics on trades.
     Only rows with a non-NaN 'realised_profit' are considered trades.
@@ -187,12 +187,30 @@ def compute_trade_statistics(df, risk_to_reward):
         else np.nan
     )
 
+    # Cumulative Profit:
+    cum_ret = np.ones(len(trades_df))
+    if trades_df["realised_profit"][0] > 0:
+        cum_ret[0] = (100 + risk_to_reward) / 100
+    elif trades_df["realised_profit"][0] < 0:
+        cum_ret[0] = 0.99
+    for i in range(1, len(trades_df)):
+        if trades_df["realised_profit"][i] > 0:
+            cum_ret[i] = cum_ret[i-1] * (100 + risk_to_reward) / 100
+        elif trades_df["realised_profit"][i] < 0:
+            cum_ret[i] = cum_ret[i-1] * 0.99
+        else:
+            cum_ret[i] = cum_ret[i-1]
+    cum_prof = cum_ret[-1] - 1
+
+    # Cumulative Fees:
+    cum_fees = cum_ret * trades_df['fee_percent']
+
+
     # Sharpe ratio for trades.
-    std_profit = trades_df["realised_profit"].std()
+    std_profit = (trades_df['win']).std()
     sharpe_ratio = (
-        avg_profit / std_profit * np.sqrt(total_trades)
-        if (std_profit != 0 and total_trades > 0)
-        else np.nan
+        (cum_prof - (1.03 ** ((config["backtest_end_date_time"] - config["backtest_start_date_time"]).days / 365) - 1)) /
+        std_profit
     )
 
     # Build the equity curve (cumulative sum of trade profits).
@@ -220,6 +238,9 @@ def compute_trade_statistics(df, risk_to_reward):
         "Profit % (Accounting for R2R and fees)": round(
             num_wins * risk_to_reward - num_losses - total_fees, 2
         ),
+        "Cumulative Profit % (Accounting for R2R)": round(cum_prof * 100, 2),
+        "Cumulative Profit % (Accounting for R2R and fees)": round(cum_prof * 100 - cum_fees.sum(), 2),
+        f"Sharpe Ratio (Assuming annual 3% risk-free returns)": round(sharpe_ratio, 2) if std_profit > 0 else np.nan,
         "--- ONLY APPLICABLE IS RISK TO REWARD IS 1 ---": "",
         "Maximum Drawdown": max_drawdown,
         "Maximum Drawdown (%)": (
@@ -231,7 +252,6 @@ def compute_trade_statistics(df, risk_to_reward):
         "Average Win": avg_win,
         "Average Loss": avg_loss,
         "Profit Factor": profit_factor,
-        "Sharpe Ratio": sharpe_ratio,
     }
     return stats, trades_df
 
@@ -430,7 +450,7 @@ def generate_analysis_report(df, output_folder, full_backtesting_df, config):
         os.makedirs(output_folder)
 
     # Compute trade statistics and filter trades.
-    stats, trades_df = compute_trade_statistics(df, config["risk_to_reward_ratio"])
+    stats, trades_df = compute_trade_statistics(df, config["risk_to_reward_ratio"], config)
 
     # Generate plots.
     equity_curve_path = plot_equity_curve(trades_df, output_folder)
@@ -464,6 +484,10 @@ def generate_analysis_report(df, output_folder, full_backtesting_df, config):
     print("Analysis report saved to:", report_file)
 
     config_path = os.path.join(output_folder, "config.json")
+
+    config["backtest_start_date_time"] = str(config["backtest_start_date_time"])
+    config["backtest_end_date_time"] = str(config["backtest_end_date_time"])
+
     with open(config_path, "w") as json_file:
         json.dump(config, json_file, indent=4)
     print(f"Config saved to: {config_path}")
