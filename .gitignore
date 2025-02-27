@@ -1,5 +1,4 @@
 __pycache__/
-analysis_output/
 analysis/
 *.py[cod]
 *.log
