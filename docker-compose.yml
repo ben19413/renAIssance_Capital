@@ -1,10 +1,9 @@
 
 services:
-  trader-dev:
+  trader:
     build:
       context: .
       dockerfile: Dockerfile
-      target: development
     env_file: 
       - .env
     container_name: trader-dev
@@ -14,18 +13,7 @@ services:
       - "8888:8888"
     restart: unless-stopped
 
-  trader-prod:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: production
-    env_file: 
-      - .env
-    container_name: trader-prod
-    # In production, you may not need volume mapping since the code is baked into the image.
-    ports:
-      - "8000:8000"
-    restart: unless-stopped
+  
 
 
 

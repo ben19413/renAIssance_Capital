@@ -13,32 +13,7 @@
     WORKDIR /app
     ENV PYTHONPATH=/app/src
     
-    
-    # Copy common files
-   
-    
-    # -------------------------------
-    # Production Stage: production image
-    # -------------------------------
-    FROM base AS production
-    COPY setup_production.py /app/setup.py
-    
-    # Copy production-specific requirements file
-    COPY src/production/ /app/production/
-    COPY production_requirements.txt /app/
-    COPY src/config_production.json /app/production/
-    EXPOSE 8000
-    # Install only production dependencies
 
-    RUN pip install --no-cache-dir -r production_requirements.txt && pip install .
-    
-    # Replace with your production entrypoint as needed
-    CMD ["uvicorn", "production.server:app", "--host", "0.0.0.0", "--port", "8000"]
-    
-    # -------------------------------
-    # Development Stage: development image
-    # -------------------------------
-    FROM base AS development
     COPY setup_development.py /app/setup.py
     COPY src/ /app/src/
     # Copy development requirements file
@@ -51,5 +26,3 @@
     # here we use a placeholder command.
     CMD ["tail", "-f", "/dev/null"]
     
-
-
