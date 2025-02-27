@@ -52,7 +52,7 @@ def create_target(df, Close_col, num_candles):
     return df
 
 
-def make_features(df):
+def make_features(df, target_width):
     df["Time"] = pd.to_datetime(df["Time"])
     df["hour"] = df["Time"].dt.hour
     df["day_of_week"] = df["Time"].dt.dayofweek  # Monday=0, Sunday=6
@@ -64,7 +64,7 @@ def make_features(df):
     df["qv_ema10"] = df["qv"].ewm(span=10, adjust=False).mean()
     df["qv_ema30"] = df["qv"].ewm(span=30, adjust=False).mean()
     # Get target
-    df = create_target(df, "Close", 15)
+    df = create_target(df, "Close", target_width)
     # EMA
     df["ema5"] = df["Close"].ewm(span=5, adjust=False).mean()
     df["ema10"] = df["Close"].ewm(span=10, adjust=False).mean()
