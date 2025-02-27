@@ -20,8 +20,10 @@ CONFIG_PATH = os.getenv("config_path_development")
 with open(CONFIG_PATH, "r") as file:
     config = json.load(file)
 
-backtest_start_date_time = pd.to_datetime(config["general"]["backtest_start_date_time"])
-backtest_end_date_time = pd.to_datetime(config["general"]["backtest_end_date_time"])
+
+config["general"]["backtest_start_date_time"] = pd.to_datetime(config["general"]["backtest_start_date_time"])
+config["general"]["backtest_end_date_time"] = pd.to_datetime(config["general"]["backtest_end_date_time"])
+
 
 for trial, parameters in config["trials"].items():
     trial_config = config["trials"][trial]
@@ -31,8 +33,9 @@ for trial, parameters in config["trials"].items():
 
     full_backtesting_df = get_backtesting_data(trial_config["instrument"])
 
+
     training_end_point_df = full_backtesting_df.loc[
-        backtest_start_date_time:backtest_end_date_time
+        trial_config["backtest_start_date_time"]:trial_config["backtest_end_date_time"]
     ]
     for training_end_point in tqdm(training_end_point_df.index):
         training_start_point = training_end_point - timedelta(

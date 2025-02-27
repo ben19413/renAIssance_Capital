@@ -1,9 +1,11 @@
 {
+
   "general": {
   "backtest_start_date_time": "2022-09-17 18:00",
   "backtest_end_date_time": "2022-09-21 18:00",
   "account_size":1000,
-  "risk_per_trade_percent":1
+  "risk_per_trade_percent":1,
+  "risk_free_annual_return": 3
   },
   "trials": {
     "RR3,CW20": {
@@ -20,10 +22,3 @@
       }
     }
   }
-
-
-
-
-
-
-
