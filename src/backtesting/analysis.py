@@ -209,9 +209,10 @@ def compute_trade_statistics(df, risk_to_reward, config):
     # Sharpe ratio for trades.
     std_profit = (trades_df['win']).std()
     sharpe_ratio = (
-        (cum_prof - (1.03 ** ((config["backtest_end_date_time"] - config["backtest_start_date_time"]).days / 365) - 1)) /
+        100 * (cum_prof - (1.03 ** ((config["backtest_end_date_time"] - config["backtest_start_date_time"]).days / 365) - 1)) /
         std_profit
     )
+
 
     # Build the equity curve (cumulative sum of trade profits).
     trades_df = trades_df.sort_index()  # Assuming the index represents the exit time.
