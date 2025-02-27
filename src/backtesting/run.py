@@ -25,29 +25,29 @@ backtest_end_date_time = pd.to_datetime(config["general"]["backtest_end_date_tim
 
 for trial, parameters in config["trials"].items():
     trial_config = config["trials"][trial]
-    trial_config["other"].update(config["general"]) 
+    trial_config.update(config["general"]) 
 
     results_df = pd.DataFrame(columns=["trade", "stop_loss", "take_profit", "ATR"])
 
-    full_backtesting_df = get_backtesting_data(trial_config["other"]["instrument"])
+    full_backtesting_df = get_backtesting_data(trial_config["instrument"])
 
     training_end_point_df = full_backtesting_df.loc[
         backtest_start_date_time:backtest_end_date_time
     ]
     for training_end_point in tqdm(training_end_point_df.index):
         training_start_point = training_end_point - timedelta(
-            hours=trial_config["classifier"]["training_period_data_size"]
+            hours=trial_config["training_period_data_size"]
         )
         
         training_df = full_backtesting_df.loc[training_start_point:training_end_point]
 
-        features_df = make_features(training_df, trial_config["classifier"]["target_width"])
+        features_df = make_features(training_df, trial_config["target_width"])
 
         trade = classifier(features_df)
 
         if trade != 0:
             stop_loss, take_profit, atr = ATR(
-                features_df, trade, trial_config["other"]["risk_to_reward_ratio"]
+                features_df, trade, trial_config["risk_to_reward_ratio"]
             )
         else:
             stop_loss = None

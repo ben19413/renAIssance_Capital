@@ -7,31 +7,20 @@
   },
   "trials": {
     "RR3,CW20": {
-      "classifier":
-      {
+        "instrument": "EURUSD.csv",
         "training_period_data_size": 4545,
-        "target_width": 20
-      },
-      "other":
-      {
-        "risk_to_reward_ratio": 3,
-        "instrument": "EURUSD.csv"
-      }
+        "target_width": 20,
+        "risk_to_reward_ratio": 3
     },
     "RR1, CW5": {
-      "classifier":
-      {
+        "instrument": "EURUSD.csv",
         "training_period_data_size": 4545,
-        "target_width": 5
-      },
-      "other":
-      {
-        "risk_to_reward_ratio": 1,
-        "instrument": "EURUSD.csv"
+        "target_width": 5,
+        "risk_to_reward_ratio": 1
       }
     }
   }
-}
+
 
 
 
