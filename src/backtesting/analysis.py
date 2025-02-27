@@ -30,13 +30,13 @@ import json
 #
 
 
-def analysis(full_backtesting_df, results_df, config):
+def analysis(full_backtesting_df, results_df, config, trial):
 
     trades_df = full_backtesting_df.join(results_df, how="left")
     outcome_df = calculate_realised_profit(
         trades_df, config["risk_to_reward_ratio"], config
     )
-    generate_analysis_report(outcome_df, "analysis_output", full_backtesting_df, config)
+    generate_analysis_report(outcome_df, f"analysis/{trial}", full_backtesting_df, config)
 
 
 def calculate_realised_profit(df, risk_to_reward, config):

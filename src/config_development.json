@@ -1,10 +1,29 @@
 {
-    "training_period_data_size": 4545,
-    "backtest_start_date_time": "2022-09-17 18:00",
-    "backtest_end_date_time": "2022-09-21 18:00",
-    "risk_to_reward_ratio": 3,
-    "account_size":1000,
-    "risk_per_trade_percent":1,
-    "backtesting_data_name": "EURUSD_full_test.csv"
-
+  "general": {
+  "backtest_start_date_time": "2022-09-17 18:00",
+  "backtest_end_date_time": "2022-09-21 18:00",
+  "account_size":1000,
+  "risk_per_trade_percent":1
+  },
+  "trials": {
+    "RR3,CW20": {
+        "instrument": "EURUSD.csv",
+        "training_period_data_size": 4545,
+        "target_width": 20,
+        "risk_to_reward_ratio": 3
+    },
+    "RR1, CW5": {
+        "instrument": "EURUSD.csv",
+        "training_period_data_size": 4545,
+        "target_width": 5,
+        "risk_to_reward_ratio": 1
+      }
+    }
   }
+
+
+
+
+
+
+
