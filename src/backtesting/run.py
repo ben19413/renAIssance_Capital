@@ -35,7 +35,7 @@ for trial, parameters in config["trials"].items():
 
 
     training_end_point_df = full_backtesting_df.loc[
-        config["general"]["backtest_start_date_time"]:config["general"]["backtest_end_date_time"]
+        trial_config["backtest_start_date_time"]:trial_config["backtest_end_date_time"]
     ]
     for training_end_point in tqdm(training_end_point_df.index):
         training_start_point = training_end_point - timedelta(
