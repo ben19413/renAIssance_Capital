@@ -30,14 +30,15 @@ import json
 #
 
 
-def analysis(full_backtesting_df, results_df, config, trial):
+def trial_analysis(full_backtesting_df, results_df, config, stats_dict, trial):
 
     trades_df = full_backtesting_df.join(results_df, how="left")
     outcome_df = calculate_realised_profit(
         trades_df, config["risk_to_reward_ratio"], config
     )
-    generate_analysis_report(outcome_df, f"analysis/{trial}", full_backtesting_df, config)
+    stats_dict = generate_analysis_report(outcome_df, f"analysis/{trial}", full_backtesting_df, config, stats_dict, trial)
 
+    return stats_dict
 
 def calculate_realised_profit(df, risk_to_reward, config):
     """
@@ -443,7 +444,7 @@ def plot_stock_price_with_buy_sell(full_backtesting_df, trades_df, output_folder
 # -------------------------------
 # Report Generation
 # -------------------------------
-def generate_analysis_report(df, output_folder, full_backtesting_df, config):
+def generate_analysis_report(df, output_folder, full_backtesting_df, config, stats_dict, trial):
     """
     Computes statistics, generates plots, and writes a text report summarizing the analysis.
     """
@@ -486,10 +487,40 @@ def generate_analysis_report(df, output_folder, full_backtesting_df, config):
     print("Analysis report saved to:", report_file)
 
     config_path = os.path.join(output_folder, "config.json")
+    stats_path = os.path.join(output_folder, "stats.json")
 
     config["backtest_start_date_time"] = str(config["backtest_start_date_time"])
     config["backtest_end_date_time"] = str(config["backtest_end_date_time"])
 
     with open(config_path, "w") as json_file:
         json.dump(config, json_file, indent=4)
+
+    with open(stats_path, "w") as json_file:
+        json.dump(stats, json_file, indent=4)
+
+    stats_dict[trial] = {**stats, **config}
+
     print(f"Config saved to: {config_path}")
+
+    return stats_dict
+
+
+def analysis(stats_dict):
+    print('full analysis module - add analysis that crosses multiple trials')
+
+    # Convert dictionary to DataFrame
+    stats_df = pd.DataFrame.from_dict(stats_dict, orient='index')
+
+    # Add trial names as a column
+    stats_df.insert(0, "Trial", stats_df.index)
+
+    # Reset index for proper DataFrame format
+    stats_df.reset_index(drop=True, inplace=True)
+
+
+    for r2r in stats_df['risk_to_reward_ratio'].unique():
+
+        filtered_df = stats_df[stats_df['risk_to_reward_ratio'] == r2r]
+        # add plotting syntax of CW vs profit after fees
+
+        # save each plot to analysis/summary

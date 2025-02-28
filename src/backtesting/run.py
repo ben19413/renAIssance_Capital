@@ -2,7 +2,7 @@ from backtesting.get_backtesting_data import get_backtesting_data
 from production.models.classifier import classifier
 from production.models.ATR import ATR
 from production.make_features import make_features
-from backtesting.analysis import analysis
+from backtesting.analysis import trial_analysis, analysis
 
 from tqdm import tqdm
 
@@ -24,6 +24,7 @@ with open(CONFIG_PATH, "r") as file:
 config["general"]["backtest_start_date_time"] = pd.to_datetime(config["general"]["backtest_start_date_time"])
 config["general"]["backtest_end_date_time"] = pd.to_datetime(config["general"]["backtest_end_date_time"])
 
+stats_dict = {}
 
 for trial, parameters in config["trials"].items():
     trial_config = config["trials"][trial]
@@ -72,6 +73,8 @@ for trial, parameters in config["trials"].items():
 
 
     if results_df["trade"].sum() != 0:
-        analysis(full_backtesting_df, results_df, trial_config, trial)
+        stats_dict = trial_analysis(full_backtesting_df, results_df, trial_config, stats_dict, trial)
     else:
         print("Analysis module off - no trades taken")
+
+analysis(stats_dict)
