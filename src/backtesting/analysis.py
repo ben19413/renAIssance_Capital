@@ -209,10 +209,9 @@ def compute_trade_statistics(df, risk_to_reward, config):
 
     # Sharpe ratio for trades.
     std = (trades_df['win'] / 100).std()
-    annualised_std = std * np.sqrt(365 / (config["backtest_end_date_time"] - config["backtest_start_date_time"]).days)
     sharpe_ratio = (
-        (cum_prof - ((1 + config["risk_free_annual_return"]/100) ** ((config["backtest_end_date_time"] - config["backtest_start_date_time"]).days / 365) - 1)) /
-        annualised_std
+        (((1 + (cum_prof - cum_fees.sum()/100)) ** (365 / (config["backtest_end_date_time"] - config["backtest_start_date_time"]).days) - 1) - (config["risk_free_annual_return"]/100)) /
+        std
     )
 
 
@@ -243,13 +242,13 @@ def compute_trade_statistics(df, risk_to_reward, config):
         ),
         "Cumulative Profit % (Accounting for R2R)": round(cum_prof * 100, 2),
         "Cumulative Profit % (Accounting for R2R and fees)": round(cum_prof * 100 - cum_fees.sum(), 2),
-        f"Sharpe Ratio (Assuming annual 3% risk-free returns)": round(sharpe_ratio, 2) if std > 0 else np.nan,
         "--- ONLY APPLICABLE IS RISK TO REWARD IS 1 ---": "",
         "Maximum Drawdown": max_drawdown,
         "Maximum Drawdown (%)": (
             max_drawdown_pct * 100 if not np.isnan(max_drawdown_pct) else np.nan
         ),
         "--- BELOW NOT CONFIGURED TO BE ACCURATE FOR OUR STRATEGY ---": "",
+        f"Sharpe Ratio (Assuming annual 3% risk-free returns)": round(sharpe_ratio, 2) if std > 0 else np.nan,
         "Total Profit": total_profit,
         "Average Profit per Trade": avg_profit,
         "Average Win": avg_win,
