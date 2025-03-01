@@ -11,7 +11,7 @@ import json
 from production.remote.process_api_data import process_api_data
 from production.make_features import make_features
 from production.models.classifier import classifier
-from production.models.ATR import ATR
+from production.models.ATR import ATR_prod_refactor
 
 app = FastAPI()
 
@@ -35,7 +35,7 @@ def train_and_predict(json: dict):
     trade = classifier(features_df)
 
     if trade != 0:
-        stop_loss, take_profit, atr = ATR(
+        stop_loss, take_profit, atr = ATR_prod_refactor(
             features_df, trade, config["risk_to_reward_ratio"]
         )
     else:
