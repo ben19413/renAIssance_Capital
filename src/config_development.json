@@ -1,5 +1,4 @@
 {
-
   "general": {
   "backtest_start_date_time": "2022-09-20 06:00",
   "backtest_end_date_time": "2022-09-21 18:00",
@@ -11,13 +10,19 @@
     "RR3,CW20": {
         "instrument": "EURUSD.csv",
         "training_period_data_size": 4545,
-        "target_width": 20,
-        "risk_to_reward_ratio": 3
+        "target_width": 10,
+        "risk_to_reward_ratio": 10
     },
     "RR1, CW5": {
         "instrument": "EURUSD.csv",
         "training_period_data_size": 4545,
-        "target_width": 5,
+        "target_width": 10,
+        "risk_to_reward_ratio": 1
+      },
+      "RR2, CW5": {
+        "instrument": "EURUSD.csv",
+        "training_period_data_size": 4545,
+        "target_width": 15,
         "risk_to_reward_ratio": 1
       }
     }
