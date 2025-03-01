@@ -50,7 +50,7 @@ for trial, parameters in config["trials"].items():
 
         config_df = pd.concat([config_df, trial_config_df], ignore_index=True)
 
-        predictions_df = pd.DataFrame(columns=["trade", "stop_loss", "take_profit", "ATR"])
+        predictions_df = pd.DataFrame(columns=["trade"])
 
         full_backtesting_df = get_backtesting_data(trial_config["instrument"])
 
@@ -68,25 +68,13 @@ for trial, parameters in config["trials"].items():
 
             trade = classifier(features_df)
 
-            if trade != 0:
-                stop_loss, take_profit, atr = ATR(
-                    features_df, trade, trial_config["risk_to_reward_ratio"]
-                )
-            else:
-                stop_loss = None
-                take_profit = None
-                atr = None
-
-            iteration_df = pd.DataFrame(
+            iteration_prediction_df = pd.DataFrame(
                 {
-                    "trade": trade,
-                    "stop_loss": [stop_loss if stop_loss is not None else np.nan],
-                    "take_profit": [take_profit if take_profit is not None else np.nan],
-                    "ATR": [atr if atr is not None else np.nan],
+                    "trade": [trade]
                 }
             )
 
-            predictions_df = pd.concat([predictions_df, iteration_df], ignore_index=True)
+            predictions_df = pd.concat([predictions_df, iteration_prediction_df], ignore_index=True)
 
         predictions_df.index = training_end_point_df.index
     else:
@@ -94,8 +82,10 @@ for trial, parameters in config["trials"].items():
 
     predictions_dict[trial] = predictions_df
 
+    orders_df = ATR(features_df, predictions_df, trial_config["risk_to_reward_ratio"])
+
     if predictions_df["trade"].sum() != 0:
-        stats_dict = trial_analysis(full_backtesting_df, predictions_df, trial_config, stats_dict, trial)
+        stats_dict = trial_analysis(full_backtesting_df, orders_df, trial_config, stats_dict, trial)
     else:
         print("Analysis module off - no trades taken")
 
