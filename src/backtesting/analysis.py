@@ -243,13 +243,13 @@ def compute_trade_statistics(df, risk_to_reward, config):
         ),
         "Cumulative Profit % (Accounting for R2R)": round(cum_prof * 100, 2),
         "Cumulative Profit % (Accounting for R2R and fees)": round(cum_prof * 100 - cum_fees.sum(), 2),
-        f"Sharpe Ratio (Assuming annual 3% risk-free returns)": round(sharpe_ratio, 2) if std > 0 else np.nan,
         "--- ONLY APPLICABLE IS RISK TO REWARD IS 1 ---": "",
         "Maximum Drawdown": max_drawdown,
         "Maximum Drawdown (%)": (
             max_drawdown_pct * 100 if not np.isnan(max_drawdown_pct) else np.nan
         ),
         "--- BELOW NOT CONFIGURED TO BE ACCURATE FOR OUR STRATEGY ---": "",
+        f"Sharpe Ratio (Assuming annual 3% risk-free returns)": round(sharpe_ratio, 2) if std > 0 else np.nan,
         "Total Profit": total_profit,
         "Average Profit per Trade": avg_profit,
         "Average Win": avg_win,
