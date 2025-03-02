@@ -15,7 +15,7 @@ from production.models.ATR import ATR_prod_refactor
 
 app = FastAPI()
 
-CONFIG_PATH = os.getenv("config_path_production")
+CONFIG_PATH = "/app/production/config_production.json"
 
 with open(CONFIG_PATH, "r") as file:
     config = json.load(file)
