@@ -3,6 +3,7 @@ from production.models.classifier import classifier
 from production.models.ATR import ATR
 from production.make_features import make_features
 from backtesting.analysis import trial_analysis, analysis
+import backtesting.config_generator as config_generator
 
 from tqdm import tqdm
 
@@ -15,6 +16,7 @@ import json
 
 warnings.filterwarnings("ignore")
 
+config_generator
 CONFIG_PATH = os.getenv("config_path_development")
 
 with open(CONFIG_PATH, "r") as file:
