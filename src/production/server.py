@@ -11,7 +11,7 @@ import json
 from production.remote.process_api_data import process_api_data
 from production.make_features import make_features
 from production.models.classifier import classifier
-from production.models.ATR import ATR_prod_refactor
+from production.models.ATR import ATR
 import logging
 app = FastAPI()
 
@@ -79,19 +79,24 @@ async def train_and_predict(request: Request):
 
     live_df = process_api_data(body_str)
     features_df = make_features(live_df, config["target_width"])
-
+    features_df.index = pd.to_datetime(features_df["Time"])
     trade = classifier(features_df)
 
-    if trade != 0:
-        stop_loss, take_profit, atr = ATR_prod_refactor(
-            features_df, trade, config["risk_to_reward_ratio"]
-        )
-    else:
-        stop_loss = None
-        take_profit = None
-        atr = None
+    prediction_df = pd.DataFrame(
+                {
+                    "trade": [trade]
+                }
+            )
+    prediction_df.index = features_df.tail(1).index
 
-    time = str(features_df.tail(1).index[0])
+    orders_df = ATR(features_df, prediction_df, config["risk_to_reward_ratio"])
+    print(orders_df)
+    print(orders_df.shape)
+
+    time = str(orders_df.tail(1).index[0])
+    stop_loss = float(orders_df.tail(1)["stop_loss"])
+    take_profit = float(orders_df.tail(1)["take_profit"])
+    atr = float(orders_df.tail(1)["ATR"])
 
     return {
         "time": time,
