@@ -1,0 +1,25 @@
+Trade Analysis Report
+========================================
+Total Trades: 385
+Winning Trades: 39
+Losing Trades: 346
+Win Rate (%): 10.129870129870131
+Total Fees: 20.61990047323952
+Average Fees: 0.053558183047375384
+Profit % (Accounting for R2R): 44
+Profit % (Accounting for R2R and fees): 23.38
+--- ONLY APPLICABLE IS RISK TO REWARD IS 1 ---: 
+Maximum Drawdown: -47.0
+Maximum Drawdown (%): nan
+--- BELOW NOT CONFIGURED TO BE ACCURATE FOR OUR STRATEGY ---: 
+Total Profit: 0.04234724582491267
+Average Profit per Trade: 0.00010999284629847447
+Average Win: 0.014155802451280829
+Average Loss: -0.0014732053461706347
+Profit Factor: 1.083077952578143
+Sharpe Ratio: 0.43080106675236607
+
+Graphs:
+Equity Curve: analysis_output_rr10/equity_curve.png
+Trade Duration Histogram: analysis_output_rr10/trade_duration_histogram.png
+Stock Price with Buy and Sell Indications: analysis_output_rr10/stock_price_with_buy_sell.png

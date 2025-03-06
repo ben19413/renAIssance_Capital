@@ -52,31 +52,12 @@ def read_root():
 
 @app.post('/train_and_predict')
 async def train_and_predict(request: Request):
-    logger.info("POST request received")
-    body = await request.body()
-
     
-    #logger.info("Raw body bytes: %s", body_bytes)
-
-    # logger.info(body)
-
+    body = await request.body()
     body_str = body.decode('utf-8')
     body_str = body_str.lstrip('\x00')
-    logger.info(f"Body length: {len(body_str)}")
     body_str = body_str.strip()
-
-    logger.info(f"Body length after strip: {len(body_str)}")
-    logger.info(f"Raw body content: {body_str}")
-    logger.info("PREJSONPARSE")
-    logger.info(body_str)
-    logger.info(type(body_str))
-
     body_str = json.loads(body_str) 
-
-    logger.info("POSTJSONPARSE")
-    logger.info(body_str)
-    logger.info(type(body_str))
-
     live_df = process_api_data(body_str)
     features_df = make_features(live_df, config["target_width"])
     features_df.index = pd.to_datetime(features_df["Time"])
@@ -90,8 +71,7 @@ async def train_and_predict(request: Request):
     prediction_df.index = features_df.tail(1).index
 
     orders_df = ATR(features_df, prediction_df, config["risk_to_reward_ratio"])
-    print(orders_df)
-    print(orders_df.shape)
+    
 
     time = str(orders_df.tail(1).index[0])
     stop_loss = float(orders_df.tail(1)["stop_loss"])

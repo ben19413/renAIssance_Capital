@@ -1,0 +1,8 @@
+{
+    "training_period_data_size": 4545,
+    "backtest_start_date_time": "2022-09-17 18:00",
+    "backtest_end_date_time": "2025-02-01 18:00",
+    "risk_to_reward_ratio": 10,
+    "account_size": 1000,
+    "risk_per_trade_percent": 1
+}
