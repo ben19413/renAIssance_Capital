@@ -148,7 +148,7 @@ def calculate_realised_profit(df, risk_to_reward, config):
     df["fee"] = np.where(
         df["win"] == np.nan,
         0,
-        (7 / 100000)
+        df["Close"] * (7 / 100000)
         * (
             (config["account_size"] * (config["risk_per_trade_percent"]) / 100)
             / df["ATR"]
