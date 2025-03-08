@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 import numpy as np
 import pandas as pd
 import lightgbm as lgb
@@ -11,7 +11,7 @@ import json
 from production.remote.process_api_data import process_api_data
 from production.make_features import make_features
 from production.models.classifier import classifier
-from production.models.ATR import ATR_prod_refactor
+from production.models.ATR import ATR
 
 app = FastAPI()
 
@@ -27,28 +27,40 @@ def read_root():
 
 
 @app.post('/train_and_predict')
-def train_and_predict(json: dict):
-
-    live_df = process_api_data(json)
-    features_df = make_features(live_df)
-
+async def train_and_predict(request: Request):
+    body = await request.body()
+    body_str = body.decode('utf-8')
+    body_str = body_str.lstrip('\x00')
+    body_str = body_str.strip()
+    body_str = json.loads(body_str) 
+    live_df = process_api_data(body_str)
+    live_df.index = pd.to_datetime(live_df["Time"])
+    features_df = make_features(live_df, config["target_width"])
     trade = classifier(features_df)
 
-    if trade != 0:
-        stop_loss, take_profit, atr = ATR_prod_refactor(
-            features_df, trade, config["risk_to_reward_ratio"]
-        )
-    else:
-        stop_loss = None
-        take_profit = None
-        atr = None
+    prediction_df = pd.DataFrame(
+                {
+                    "trade": [trade]
+                }
+            )
+    prediction_df.index = features_df.tail(1).index
 
-    time = str(features_df.tail(1).index[0])
+    orders_df = ATR(features_df, prediction_df, config["risk_to_reward_ratio"])
+
+    time = str(orders_df.tail(1).index[0])
+    stop_loss = float(orders_df.tail(1)["stop_loss"].iloc[0])
+    take_profit = float(orders_df.tail(1)["take_profit"].iloc[0])
+    atr = float(orders_df.tail(1)["ATR"].iloc[0])
+
+    if trade == 0:
+        stop_loss = 0
+        take_profit = 0
+        atr = 0
 
     return {
         "time": time,
         "trade": trade,
-        "stop_loss": stop_loss,
-        "take_profit": take_profit,
-        "ATR": atr
+        "stop_loss": stop_loss if stop_loss is not np.nan else 0,
+        "take_profit": take_profit if take_profit is not np.nan else 0,
+        "ATR": atr if atr is not np.nan else 0
     }

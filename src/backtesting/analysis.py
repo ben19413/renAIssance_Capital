@@ -148,13 +148,16 @@ def calculate_realised_profit(df, risk_to_reward, config):
     df["fee"] = np.where(
         df["win"] == np.nan,
         0,
-        (7 / 100000)
+        df["Close"] * (7 / 100000)
         * (
             (config["account_size"] * (config["risk_per_trade_percent"]) / 100)
             / df["ATR"]
         ),
     )
     df["fee_percent"] = 100 * df["fee"] / config["account_size"]
+
+    ###
+    ### Write outcome df to blob, concat all of the config as extra columns, also append code version column, unique runid
 
     return df
 
