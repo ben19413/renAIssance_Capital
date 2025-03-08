@@ -15,7 +15,6 @@ from production.models.ATR import ATR
 
 app = FastAPI()
 
-
 CONFIG_PATH = "/app/production/config_production.json"
 
 with open(CONFIG_PATH, "r") as file:
