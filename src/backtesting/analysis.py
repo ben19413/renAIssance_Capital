@@ -156,6 +156,9 @@ def calculate_realised_profit(df, risk_to_reward, config):
     )
     df["fee_percent"] = 100 * df["fee"] / config["account_size"]
 
+    ###
+    ### Write outcome df to blob, concat all of the config as extra columns, also append code version column, unique runid
+
     return df
 
 
