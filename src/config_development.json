@@ -1,7 +1,7 @@
 {
   "general": {
-  "backtest_start_date_time": "2022-09-20 06:00",
-  "backtest_end_date_time": "2022-09-21 18:00",
+  "backtest_start_date_time": "2022-08-01 03:00",
+  "backtest_end_date_time": "2022-09-30 20:00",
   "account_size":1000,
   "risk_per_trade_percent":1,
   "risk_free_annual_return": 3
@@ -13,17 +13,23 @@
         "target_width": 10,
         "risk_to_reward_ratio": 10
     },
-    "RR1, CW5": {
+    "RR5,CW20": {
+        "instrument": "EURUSD.csv",
+        "training_period_data_size": 4545,
+        "target_width": 5,
+        "risk_to_reward_ratio": 10
+    },
+    "RR2,CW20": {
         "instrument": "EURUSD.csv",
         "training_period_data_size": 4545,
         "target_width": 10,
-        "risk_to_reward_ratio": 1
-      },
-      "RR2, CW5": {
+        "risk_to_reward_ratio": 3
+    },
+    "RR1,CW20": {
         "instrument": "EURUSD.csv",
         "training_period_data_size": 4545,
-        "target_width": 15,
-        "risk_to_reward_ratio": 1
-      }
+        "target_width": 5,
+        "risk_to_reward_ratio": 3
+    }
     }
   }

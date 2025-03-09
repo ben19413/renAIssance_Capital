@@ -2,3 +2,6 @@ __pycache__/
 analysis/
 *.py[cod]
 *.log
+master_analysis/
+master_analysis_archive/
+src/backtesting/master_outcome_df
