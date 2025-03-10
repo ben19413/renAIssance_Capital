@@ -10,7 +10,7 @@ with open(CONFIG_PATH, "r") as file:
     config = json.load(file)
 
 print(config)
-df = pd.read_csv("master_outcome_df")
+df = pd.read_csv("master_outcome_df.csv")
 
 # Filter to choose on series of runs
 df = df[(df["training_period_data_size"]==config["training_period_data_size"]) 
