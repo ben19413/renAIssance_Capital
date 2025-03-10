@@ -4,31 +4,8 @@ import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 import json
-
-# take results_df
-
-# PRINT
-
-# returns over time plotted
-# number of wins
-# number of losses
-# sharpe ratio
-# alpha
-
-
-# picture.to_png('/src/data/{env_variables}/graph1')
-# variables.to_json('/src/data/{env_variables}/variables')
-
-# merge results_df to full backtesting data dataframe
-# write function that adds column that indicates trade outcome
-# add fee column (fixed everytime we trade)
-
-# summarisation:
-# number of wins, number of losses
-
-# baso same thing but plotted over time
-#
-
+from datetime import datetime
+import uuid
 
 def trial_analysis(full_backtesting_df, results_df, config, stats_dict, trial):
 
@@ -148,13 +125,33 @@ def calculate_realised_profit(df, risk_to_reward, config):
     df["fee"] = np.where(
         df["win"] == np.nan,
         0,
-        (7 / 100000)
+        df["Close"] * (7 / 100000)
         * (
             (config["account_size"] * (config["risk_per_trade_percent"]) / 100)
             / df["ATR"]
         ),
     )
     df["fee_percent"] = 100 * df["fee"] / config["account_size"]
+
+    # Prepare granular output dataframe for interrun analysis at a later point
+    append_df = df[(df['trade']!=0) & ~ (df['trade'].isna()) ]
+    # Add config as extra columns
+    for key in config:
+        append_df[key] = config[key]
+    # Add extra information
+    time = datetime.now().strftime('%Y-%m-%d %H-%M-%S')
+    append_df['run_time' ]= time
+    append_df['run_id'] = str(uuid.uuid4())
+    append_df['Time'] = append_df.index
+
+    # Add new data to database and archive old version
+    try:    
+        master_outcome_df = pd.read_csv('master_outcome_df')
+        master_outcome_df.to_csv(f'master_analysis_archive/{time}_master_outcome_df')
+        appended_master_outcome_df = pd.concat([master_outcome_df, append_df], ignore_index=True)
+        appended_master_outcome_df.to_csv('master_outcome_df')
+    except:
+        print('Failed to archive analysis df - master_outcome_df likely missing')
 
     return df
 

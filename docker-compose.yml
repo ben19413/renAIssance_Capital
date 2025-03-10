@@ -3,7 +3,7 @@ services:
   trader:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfiledev
     env_file: 
       - .env
     container_name: trader-dev
