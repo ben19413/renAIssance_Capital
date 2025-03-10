@@ -1,35 +1,605 @@
 {
   "general": {
-  "backtest_start_date_time": "2022-08-01 03:00",
-  "backtest_end_date_time": "2022-09-30 20:00",
-  "account_size":1000,
-  "risk_per_trade_percent":1,
-  "risk_free_annual_return": 3
+    "backtest_start_date_time": "2022-09-17 18:00",
+    "backtest_end_date_time": "2022-09-20 18:00",
+    "account_size": 1000,
+    "risk_per_trade_percent": 1,
+    "risk_free_annual_return": 3
   },
   "trials": {
-    "RR3,CW20": {
-        "instrument": "EURUSD.csv",
-        "training_period_data_size": 4545,
-        "target_width": 10,
-        "risk_to_reward_ratio": 10
+    "RR0.5, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 0.5
     },
-    "RR5,CW20": {
-        "instrument": "EURUSD.csv",
-        "training_period_data_size": 4545,
-        "target_width": 5,
-        "risk_to_reward_ratio": 10
+    "RR1, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 1
     },
-    "RR2,CW20": {
-        "instrument": "EURUSD.csv",
-        "training_period_data_size": 4545,
-        "target_width": 10,
-        "risk_to_reward_ratio": 3
+    "RR2, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 2
     },
-    "RR1,CW20": {
-        "instrument": "EURUSD.csv",
-        "training_period_data_size": 4545,
-        "target_width": 5,
-        "risk_to_reward_ratio": 3
-    }
+    "RR3, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 3
+    },
+    "RR5, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 5
+    },
+    "RR7, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 7
+    },
+    "RR10, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 10
+    },
+    "RR12, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 12
+    },
+    "RR15, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 15
+    },
+    "RR17, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 17
+    },
+    "RR20, CW3": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 3,
+      "risk_to_reward_ratio": 20
+    },
+    "RR0.5, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 0.5
+    },
+    "RR1, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 1
+    },
+    "RR2, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 2
+    },
+    "RR3, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 3
+    },
+    "RR5, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 5
+    },
+    "RR7, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 7
+    },
+    "RR10, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 10
+    },
+    "RR12, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 12
+    },
+    "RR15, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 15
+    },
+    "RR17, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 17
+    },
+    "RR20, CW5": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 5,
+      "risk_to_reward_ratio": 20
+    },
+    "RR0.5, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 0.5
+    },
+    "RR1, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 1
+    },
+    "RR2, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 2
+    },
+    "RR3, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 3
+    },
+    "RR5, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 5
+    },
+    "RR7, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 7
+    },
+    "RR10, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 10
+    },
+    "RR12, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 12
+    },
+    "RR15, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 15
+    },
+    "RR17, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 17
+    },
+    "RR20, CW8": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 8,
+      "risk_to_reward_ratio": 20
+    },
+    "RR0.5, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 0.5
+    },
+    "RR1, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 1
+    },
+    "RR2, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 2
+    },
+    "RR3, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 3
+    },
+    "RR5, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 5
+    },
+    "RR7, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 7
+    },
+    "RR10, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 10
+    },
+    "RR12, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 12
+    },
+    "RR15, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 15
+    },
+    "RR17, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 17
+    },
+    "RR20, CW10": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 10,
+      "risk_to_reward_ratio": 20
+    },
+    "RR0.5, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 0.5
+    },
+    "RR1, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 1
+    },
+    "RR2, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 2
+    },
+    "RR3, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 3
+    },
+    "RR5, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 5
+    },
+    "RR7, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 7
+    },
+    "RR10, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 10
+    },
+    "RR12, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 12
+    },
+    "RR15, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 15
+    },
+    "RR17, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 17
+    },
+    "RR20, CW12": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 12,
+      "risk_to_reward_ratio": 20
+    },
+    "RR0.5, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 0.5
+    },
+    "RR1, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 1
+    },
+    "RR2, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 2
+    },
+    "RR3, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 3
+    },
+    "RR5, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 5
+    },
+    "RR7, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 7
+    },
+    "RR10, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 10
+    },
+    "RR12, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 12
+    },
+    "RR15, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 15
+    },
+    "RR17, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 17
+    },
+    "RR20, CW15": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 15,
+      "risk_to_reward_ratio": 20
+    },
+    "RR0.5, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 0.5
+    },
+    "RR1, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 1
+    },
+    "RR2, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 2
+    },
+    "RR3, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 3
+    },
+    "RR5, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 5
+    },
+    "RR7, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 7
+    },
+    "RR10, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 10
+    },
+    "RR12, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 12
+    },
+    "RR15, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 15
+    },
+    "RR17, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 17
+    },
+    "RR20, CW20": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 20,
+      "risk_to_reward_ratio": 20
+    },
+    "RR0.5, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 0.5
+    },
+    "RR1, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 1
+    },
+    "RR2, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 2
+    },
+    "RR3, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 3
+    },
+    "RR5, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 5
+    },
+    "RR7, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 7
+    },
+    "RR10, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 10
+    },
+    "RR12, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 12
+    },
+    "RR15, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 15
+    },
+    "RR17, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 17
+    },
+    "RR20, CW25": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 25,
+      "risk_to_reward_ratio": 20
+    },
+    "RR0.5, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 0.5
+    },
+    "RR1, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 1
+    },
+    "RR2, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 2
+    },
+    "RR3, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 3
+    },
+    "RR5, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 5
+    },
+    "RR7, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 7
+    },
+    "RR10, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 10
+    },
+    "RR12, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 12
+    },
+    "RR15, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 15
+    },
+    "RR17, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 17
+    },
+    "RR20, CW30": {
+      "instrument": "EURUSD.csv",
+      "training_period_data_size": 4545,
+      "target_width": 30,
+      "risk_to_reward_ratio": 20
     }
   }
+}

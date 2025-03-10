@@ -46,7 +46,7 @@ def save_config(config, filename="/app/src/config_development.json"):
 
 config = generate_config(
     backtest_start_date_time="2022-09-17 18:00",
-    backtest_end_date_time="2025-02-01 18:00",
+    backtest_end_date_time="2022-09-20 18:00",
     account_size=1000,
     risk_per_trade_percent=1,
     risk_free_annual_return=3,

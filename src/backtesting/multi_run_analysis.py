@@ -2,6 +2,8 @@ import pandas as pd
 import os
 import json
 import matplotlib.pyplot as plt
+import boto3
+import io
 
 
 CONFIG_PATH = os.getenv("config_path_analysis")
@@ -10,7 +12,14 @@ with open(CONFIG_PATH, "r") as file:
     config = json.load(file)
 
 print(config)
-df = pd.read_csv("master_outcome_df")
+bucket_name = 'your-bucket-name'
+
+# Create S3 client
+s3_client = boto3.client('s3')
+
+# Read master_outcome_df from S3
+response = s3_client.get_object(Bucket=bucket_name, Key='master_outcome_df.csv')
+df = pd.read_csv(io.BytesIO(response['Body'].read()))
 
 # Filter to choose on series of runs
 df = df[(df["training_period_data_size"]==config["training_period_data_size"]) 

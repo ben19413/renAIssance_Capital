@@ -6,6 +6,8 @@ import seaborn as sns
 import json
 from datetime import datetime
 import uuid
+import boto3
+import io
 
 def trial_analysis(full_backtesting_df, results_df, config, stats_dict, trial):
 
@@ -145,13 +147,38 @@ def calculate_realised_profit(df, risk_to_reward, config):
     append_df['Time'] = append_df.index
 
     # Add new data to database and archive old version
-    try:    
-        master_outcome_df = pd.read_csv('master_outcome_df')
-        master_outcome_df.to_csv(f'master_analysis_archive/{time}_master_outcome_df')
-        appended_master_outcome_df = pd.concat([master_outcome_df, append_df], ignore_index=True)
-        appended_master_outcome_df.to_csv('master_outcome_df')
-    except:
-        print('Failed to archive analysis df - master_outcome_df likely missing')
+    #try:    
+        
+
+    bucket_name = 'renaibucket1.0'
+
+    # Create S3 client
+    s3_client = boto3.client('s3')
+
+    # Read master_outcome_df from S3
+    response = s3_client.get_object(Bucket=bucket_name, Key='master_outcome_df.csv')
+    master_outcome_df = pd.read_csv(io.BytesIO(response['Body'].read()))
+
+    # Archive the current version to S3 with timestamp
+    csv_buffer = io.StringIO()
+    master_outcome_df.to_csv(csv_buffer, index=False)
+    s3_client.put_object(
+        Bucket=bucket_name,
+        Key=f'master_analysis_archive/{time}_master_outcome_df.csv',
+        Body=csv_buffer.getvalue()
+    )
+
+    # Append new data and save back to S3
+    appended_master_outcome_df = pd.concat([master_outcome_df, append_df], ignore_index=True)
+    csv_buffer = io.StringIO()
+    appended_master_outcome_df.to_csv(csv_buffer, index=False)
+    s3_client.put_object(
+        Bucket=bucket_name,
+        Key='master_outcome_df.csv',
+        Body=csv_buffer.getvalue()
+        )
+    #except:
+        #print('Failed to archive analysis df - master_outcome_df likely missing')
 
     return df
 

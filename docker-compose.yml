@@ -9,6 +9,7 @@ services:
     container_name: trader-dev
     volumes:
       - ./src:/app/src
+      - ~/.aws:/root/.aws 
     ports:
       - "8888:8888"
     restart: unless-stopped

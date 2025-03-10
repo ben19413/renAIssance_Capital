@@ -5,3 +5,4 @@ analysis/
 master_analysis/
 master_analysis_archive/
 src/backtesting/master_outcome_df
+*.zip
