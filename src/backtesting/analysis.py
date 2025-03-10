@@ -146,10 +146,10 @@ def calculate_realised_profit(df, risk_to_reward, config):
 
     # Add new data to database and archive old version
     try:    
-        master_outcome_df = pd.read_csv('master_outcome_df')
-        master_outcome_df.to_csv(f'master_analysis_archive/{time}_master_outcome_df')
+        master_outcome_df = pd.read_csv('master_outcome_df.csv')
+        master_outcome_df.to_csv(f'master_analysis_archive/{time}_master_outcome_df.csv')
         appended_master_outcome_df = pd.concat([master_outcome_df, append_df], ignore_index=True)
-        appended_master_outcome_df.to_csv('master_outcome_df')
+        appended_master_outcome_df.to_csv('master_outcome_df.csv')
     except:
         print('Failed to archive analysis df - master_outcome_df likely missing')
 
