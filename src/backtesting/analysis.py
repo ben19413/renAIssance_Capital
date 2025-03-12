@@ -147,6 +147,7 @@ def calculate_realised_profit(df, risk_to_reward, config):
     append_df['Time'] = append_df.index
 
     # Add new data to database and archive old version
+
     #try:    
         
 
@@ -179,6 +180,7 @@ def calculate_realised_profit(df, risk_to_reward, config):
         )
     #except:
         #print('Failed to archive analysis df - master_outcome_df likely missing')
+
 
     return df
 

@@ -90,7 +90,7 @@ def make_features(df, target_width):
         df["High"],
         df["Low"],
         df["Close"],
-        window=14,
+        window=target_width,
     ).average_true_range()
 
     # Stochastic Oscillator
