@@ -60,10 +60,11 @@ for trial, parameters in config["trials"].items():
             trial_config["backtest_start_date_time"]:trial_config["backtest_end_date_time"]
         ]
         for training_end_point in tqdm(training_end_point_df.index):
-            training_start_point = training_end_point - timedelta(
-                hours=trial_config["training_period_data_size"]
-            )
-            
+            training_start_point = full_backtesting_df.index[
+                full_backtesting_df.index.get_loc(training_end_point) 
+                - (trial_config["training_period_data_size"] - 1)
+                ]
+
             training_df = full_backtesting_df.loc[training_start_point:training_end_point]
 
             features_df = make_features(training_df, trial_config["target_width"])
