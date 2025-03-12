@@ -12,7 +12,7 @@ with open(CONFIG_PATH, "r") as file:
     config = json.load(file)
 
 print(config)
-bucket_name = 'your-bucket-name'
+bucket_name = 'renaibucket1.0'
 
 # Create S3 client
 s3_client = boto3.client('s3')
