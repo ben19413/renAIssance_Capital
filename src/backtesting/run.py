@@ -81,11 +81,14 @@ for trial, parameters in config["trials"].items():
         predictions_df.index = training_end_point_df.index
     else:
         prediction_df = predictions_dict[repeat_df.head(1)['Trial'].iloc[0]]
-
+    
+    full_features_df = make_features(
+        full_backtesting_df.loc[config["general"]["backtest_start_date_time"]:config["general"]["backtest_end_date_time"]], 
+        trial_config["target_width"]
+        )
     predictions_dict[trial] = predictions_df
-
-    orders_df = ATR(features_df, predictions_df, trial_config["risk_to_reward_ratio"])
-
+    orders_df = ATR(full_features_df, predictions_df, trial_config["risk_to_reward_ratio"])
+    
     if predictions_df["trade"].sum() != 0:
         stats_dict = trial_analysis(full_backtesting_df, orders_df, trial_config, stats_dict, trial)
     else:
